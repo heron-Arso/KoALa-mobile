@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { User, MapPin, Heart, Bell, Check, ChevronRight } from 'lucide-react';
+import { useFirstLaunch } from '../../mobile/hooks/useFirstLaunch';
 
 type OnboardingStep = 'welcome' | 'nickname' | 'address' | 'preferences' | 'notifications';
 
 export default function Onboarding() {
   const navigate = useNavigate();
+  const { markOnboardingComplete } = useFirstLaunch();
   const [currentStep, setCurrentStep] = useState<OnboardingStep>('welcome');
   const [formData, setFormData] = useState({
     nickname: '',
@@ -33,10 +35,16 @@ export default function Onboarding() {
 
   const handleSkip = () => {
     if (currentStep === 'welcome') setCurrentStep('nickname');
-    else if (currentStep === 'nickname') navigate('/');
+    else if (currentStep === 'nickname') {
+      markOnboardingComplete();
+      navigate('/');
+    }
     else if (currentStep === 'address') setCurrentStep('preferences');
     else if (currentStep === 'preferences') setCurrentStep('notifications');
-    else if (currentStep === 'notifications') navigate('/');
+    else if (currentStep === 'notifications') {
+      markOnboardingComplete();
+      navigate('/');
+    }
   };
 
   const handleNext = () => {
@@ -53,7 +61,7 @@ export default function Onboarding() {
     } else if (currentStep === 'preferences') {
       setCurrentStep('notifications');
     } else if (currentStep === 'notifications') {
-      console.log('온보딩 완료:', formData);
+      markOnboardingComplete();
       navigate('/');
     }
   };
