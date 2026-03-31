@@ -1,4 +1,3 @@
-import Navigation from '../components/layouts/Header';
 import { Filter, Grid3x3, LayoutGrid } from 'lucide-react';
 import { Link } from 'react-router';
 import { useState, useEffect } from 'react';
@@ -47,10 +46,9 @@ export default function SmartStore() {
 
   return (
     <div className="min-h-screen bg-white">
-      <Navigation />
 
       {/* Hero Section */}
-      <section className="pt-24 md:pt-32 pb-8 md:pb-12 px-5 md:px-8 lg:px-12">
+      <section className="pt-4 pb-8 md:pb-12 px-5 md:px-8 lg:px-12">
         <div className="max-w-[1600px] mx-auto">
           <div className="max-w-2xl">
             <div className="text-[10px] md:text-xs text-gray-400 tracking-[0.2em] mb-3 md:mb-4 uppercase font-bold">

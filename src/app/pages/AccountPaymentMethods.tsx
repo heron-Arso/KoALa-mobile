@@ -1,7 +1,4 @@
-import { useLocation, useNavigate } from 'react-router';
 import { CreditCard, Plus, Smartphone } from 'lucide-react';
-import Navigation from '../components/layouts/Header';
-import AccountSidebar from '../components/layouts/AccountSidebar';
 import { useEffect, useState } from 'react';
 import { getMyProfile } from '../../api/user';
 
@@ -13,99 +10,62 @@ const paymentOptions = [
 ];
 
 export default function AccountPaymentMethods() {
-  const location = useLocation();
-  const navigate = useNavigate();
   const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
-    const token = localStorage.getItem('accessToken');
-    if (!token) {
-      navigate('/login');
-      return;
-    }
-    getMyProfile()
-      .then((res) => setUser(res.data.data))
-      .catch(console.error);
+    getMyProfile().then((res) => setUser(res.data.data)).catch(console.error);
   }, []);
 
   return (
     <div className="min-h-screen bg-[#FAFAFA]">
-      <Navigation />
+      <div className="pt-8 pb-16 px-4">
+        <div className="mb-6">
+          <h1 className="text-2xl font-bold tracking-tight mb-1">결제 수단</h1>
+          <p className="text-xs text-gray-400">결제 수단을 관리하세요.</p>
+        </div>
 
-      <div className="pt-24 pb-16 px-4 md:px-8 lg:px-12">
-        <div className="max-w-[1400px] mx-auto">
-          <div className="mb-8 md:mb-12">
-            <h1 className="text-2xl md:text-3xl font-bold tracking-tight mb-2">마이페이지</h1>
-            <p className="text-xs md:text-sm text-gray-400 font-medium">
-              결제 수단을 관리하세요.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-            <div className="lg:col-span-1">
-              <AccountSidebar currentPath={location.pathname} user={user} />
+        {/* 지원 결제 수단 */}
+        <div className="grid grid-cols-2 gap-3 mb-6">
+          {paymentOptions.map((method) => (
+            <div
+              key={method.id}
+              className={`bg-white rounded-2xl p-4 border ${method.color} flex items-center gap-3`}
+            >
+              <div className="text-3xl">{method.icon}</div>
+              <div className="flex-1 min-w-0">
+                <p className="font-bold text-gray-900 text-sm truncate">{method.name}</p>
+                <p className="text-[10px] text-gray-400 truncate">{method.description}</p>
+              </div>
             </div>
+          ))}
+        </div>
 
-            <div className="lg:col-span-3">
-              <div className="mb-6 md:mb-8 px-1">
-                <h2 className="text-xl md:text-2xl font-bold mb-1 italic">Payment Methods</h2>
-                <p className="text-xs md:text-sm text-gray-400 font-medium">
-                  결제 시 사용할 수단을 선택하세요
-                </p>
-              </div>
+        {/* 저장된 카드 — 추후 토스 연동 예정 */}
+        <div className="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 mb-4">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-base font-bold">저장된 카드</h3>
+            <button className="flex items-center gap-1.5 px-3 py-2 bg-black text-white rounded-xl text-xs font-bold hover:bg-gray-800 transition-colors">
+              <Plus className="w-3.5 h-3.5" /> 카드 추가
+            </button>
+          </div>
+          <div className="text-center py-10 border border-dashed border-gray-200 rounded-2xl">
+            <CreditCard className="w-10 h-10 text-gray-200 mx-auto mb-3" />
+            <p className="text-gray-400 text-sm mb-1">저장된 카드가 없습니다.</p>
+            <p className="text-xs text-gray-300">토스 페이먼츠 연동 후 카드를 등록할 수 있습니다.</p>
+          </div>
+        </div>
 
-              {/* 지원 결제 수단 */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-                {paymentOptions.map((method) => (
-                  <div
-                    key={method.id}
-                    className={`bg-white rounded-2xl p-6 border ${method.color} flex items-center gap-4`}
-                  >
-                    <div className="text-4xl">{method.icon}</div>
-                    <div className="flex-1">
-                      <p className="font-bold text-gray-900 mb-0.5">{method.name}</p>
-                      <p className="text-xs text-gray-400">{method.description}</p>
-                    </div>
-                    <div className="px-3 py-1 bg-green-100 text-green-600 text-xs font-bold rounded-full">
-                      지원
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* 저장된 카드 — 추후 토스 연동 예정 */}
-              <div className="bg-white rounded-3xl p-8 shadow-sm border border-gray-100 mb-6">
-                <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-lg font-bold">저장된 카드</h3>
-                  <button className="flex items-center gap-2 px-4 py-2 bg-black text-white rounded-xl text-sm font-bold hover:bg-gray-800 transition-colors">
-                    <Plus className="w-4 h-4" />
-                    카드 추가
-                  </button>
-                </div>
-                <div className="text-center py-12 border border-dashed border-gray-200 rounded-2xl">
-                  <CreditCard className="w-12 h-12 text-gray-200 mx-auto mb-4" />
-                  <p className="text-gray-400 mb-1">저장된 카드가 없습니다.</p>
-                  <p className="text-xs text-gray-300">
-                    토스 페이먼츠 연동 후 카드를 등록할 수 있습니다.
-                  </p>
-                </div>
-              </div>
-
-              {/* 보안 안내 */}
-              <div className="bg-blue-50 rounded-2xl p-6 border border-blue-100">
-                <div className="flex gap-4">
-                  <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
-                    <Smartphone className="w-5 h-5 text-blue-600" />
-                  </div>
-                  <div>
-                    <h3 className="font-bold mb-1 text-blue-900">안전한 결제 시스템</h3>
-                    <p className="text-sm text-blue-700 leading-relaxed">
-                      모든 결제 정보는 토스 페이먼츠의 PCI-DSS 인증 보안 시스템으로 암호화되어 보호됩니다.
-                      카드 번호는 저장되지 않으며 결제 시 토스 페이먼츠 서버에서 직접 처리됩니다.
-                    </p>
-                  </div>
-                </div>
-              </div>
+        {/* 보안 안내 */}
+        <div className="bg-blue-50 rounded-2xl p-5 border border-blue-100">
+          <div className="flex gap-3">
+            <div className="w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+              <Smartphone className="w-4 h-4 text-blue-600" />
+            </div>
+            <div>
+              <h3 className="font-bold mb-1 text-blue-900 text-sm">안전한 결제 시스템</h3>
+              <p className="text-xs text-blue-700 leading-relaxed">
+                모든 결제 정보는 토스 페이먼츠의 PCI-DSS 인증 보안 시스템으로 암호화되어 보호됩니다.
+              </p>
             </div>
           </div>
         </div>

@@ -1,13 +1,14 @@
 import { useState, useRef, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router';
 import { ArrowLeft, RotateCw, ZoomIn, ZoomOut, Maximize2, X, Info, ShoppingCart } from 'lucide-react';
-import Navigation from '../components/layouts/Header';
 import { getSku } from '../../api/sku';
 import { addCartItem } from '../../api/cart';
+import { useDialog } from '../../mobile/hooks/useDialog';
 
 export default function Product360View() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { alert } = useDialog();
 
   const [sku, setSku] = useState<any>(null);
   const [images360, setImages360] = useState<string[]>([]);
@@ -133,11 +134,6 @@ export default function Product360View() {
   };
 
   const handleAddToCart = async () => {
-    const token = localStorage.getItem('accessToken');
-    if (!token) {
-      navigate('/login');
-      return;
-    }
     setCartLoading(true);
     try {
       await addCartItem(sku.skuCode, 1);
@@ -145,7 +141,7 @@ export default function Product360View() {
       setShowToast(true);
       setTimeout(() => setShowToast(false), 3000);
     } catch (e: any) {
-      alert(e.response?.data?.message || '장바구니 담기 실패');
+      await alert(e.response?.data?.message || '장바구니 담기 실패');
     } finally {
       setCartLoading(false);
     }
@@ -175,7 +171,6 @@ export default function Product360View() {
 
   return (
     <div className="min-h-screen bg-black">
-      <Navigation />
 
       {/* Toast */}
       {showToast && (
@@ -195,7 +190,7 @@ export default function Product360View() {
         </div>
       )}
 
-      <div ref={containerRef} className="fixed inset-0 pt-20 bg-black">
+      <div ref={containerRef} className="fixed inset-0 pt-4 bg-black">
 
         {/* 헤더 */}
         <div className="absolute top-20 left-0 right-0 z-20 px-8 py-6 bg-gradient-to-b from-black/80 to-transparent">

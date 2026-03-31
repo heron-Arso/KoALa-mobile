@@ -1,4 +1,3 @@
-import Navigation from '../components/layouts/Header';
 import { useParams, Link, useNavigate } from 'react-router';
 import {
   ArrowLeft,
@@ -43,11 +42,12 @@ export default function ProductDetail() {
         const res = await getSku(id!);
         setSku(res.data.data);
 
-        // 위시리스트 여부 확인
-        const token = localStorage.getItem('accessToken');
-        if (token) {
+        // 위시리스트 여부 확인 (비로그인 시 무시)
+        try {
           const wishRes = await checkWishlist(id!);
           setIsWishlisted(wishRes.data.data);
+        } catch {
+          // 비로그인 상태면 조용히 무시
         }
       } catch (e) {
         console.error('SKU 로딩 실패:', e);
@@ -65,11 +65,6 @@ export default function ProductDetail() {
   };
 
   const handleAddToCart = async () => {
-    const token = localStorage.getItem('accessToken');
-    if (!token) {
-      navigate('/login');
-      return;
-    }
     setCartLoading(true);
     try {
       await addCartItem(sku.skuCode, 1);
@@ -83,11 +78,6 @@ export default function ProductDetail() {
   };
 
   const handleWishlist = async () => {
-    const token = localStorage.getItem('accessToken');
-    if (!token) {
-      navigate('/login');
-      return;
-    }
     try {
       if (isWishlisted) {
         await removeWishlist(sku.skuCode);
@@ -106,8 +96,7 @@ export default function ProductDetail() {
   if (loading) {
     return (
       <div className="min-h-screen bg-white">
-        <Navigation />
-        <div className="pt-32 pb-32 px-8">
+        <div className="pt-4 pb-32 px-8">
           <div className="max-w-[1600px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 animate-pulse">
             <div className="aspect-square bg-gray-100 rounded-[32px]" />
             <div className="space-y-6">
@@ -124,8 +113,7 @@ export default function ProductDetail() {
   if (!sku) {
     return (
       <div className="min-h-screen bg-white">
-        <Navigation />
-        <div className="pt-32 pb-32 px-8 flex flex-col items-center">
+        <div className="pt-4 pb-32 px-8 flex flex-col items-center">
           <h1 className="text-3xl mb-8 font-medium">상품 정보를 찾을 수 없습니다.</h1>
           <Link to="/store" className="px-8 py-4 bg-black text-white rounded-full font-medium">
             스토어로 돌아가기
@@ -141,7 +129,6 @@ export default function ProductDetail() {
 
   return (
     <div className="min-h-screen bg-white relative">
-      <Navigation />
 
       {/* Toast */}
       {showToast && (
@@ -163,7 +150,7 @@ export default function ProductDetail() {
         </div>
       )}
 
-      <div className="pt-32 pb-32 px-8">
+      <div className="pt-4 pb-32 px-8">
         <div className="max-w-[1600px] mx-auto">
           <button
             onClick={() => navigate(-1)}

@@ -1,4 +1,3 @@
-import Navigation from '../../components/layouts/Header';
 import { Play, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router';
 import { useEffect, useState } from 'react';
@@ -114,10 +113,9 @@ export default function ArtistLab() {
 
   return (
     <div className="min-h-screen bg-white">
-      <Navigation />
 
       {/* Hero Section */}
-      <section className="pt-24 md:pt-32 pb-12 md:pb-20 px-6 md:px-8">
+      <section className="pt-4 pb-12 md:pb-20 px-6 md:px-8">
         <div className="max-w-[1600px] mx-auto">
           <div className="max-w-2xl">
             <div className="text-[10px] md:text-sm text-gray-400 tracking-[0.2em] mb-3 md:mb-4 uppercase font-bold">

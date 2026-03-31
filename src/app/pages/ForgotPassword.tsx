@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { Mail, Lock, KeyRound } from 'lucide-react';
-import Navigation from '../components/layouts/Header';
 import {
   sendPasswordResetCode,
   verifyPasswordResetCode,
@@ -58,8 +57,9 @@ export default function ForgotPassword() {
       setError('비밀번호가 일치하지 않습니다.');
       return;
     }
-    if (newPassword.length < 8) {
-      setError('비밀번호는 8자 이상이어야 합니다.');
+    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&^])[A-Za-z\d@$!%*#?&^]{8,}$/;
+    if (!passwordRegex.test(newPassword)) {
+      setError('비밀번호는 8자 이상이며, 영문·숫자·특수문자(@$!%*#?&^)를 각각 포함해야 합니다.');
       return;
     }
     setLoading(true);
@@ -87,9 +87,8 @@ export default function ForgotPassword() {
 
   return (
     <div className="min-h-screen bg-[#FAFAFA]">
-      <Navigation />
 
-      <div className="pt-24 pb-16 px-8">
+      <div className="pt-4 pb-16 px-8">
         <div className="max-w-md mx-auto">
           <div className="text-center mb-12">
             <h1 className="text-3xl tracking-tight mb-3">{stepTitle[step]}</h1>

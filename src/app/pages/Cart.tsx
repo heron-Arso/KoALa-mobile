@@ -1,6 +1,5 @@
-import { Link, useNavigate } from 'react-router';
+import { Link } from 'react-router';
 import { Minus, Plus, Trash2, ShoppingBag, ArrowLeft } from 'lucide-react';
-import Navigation from '../components/layouts/Header';
 import { useState, useEffect } from 'react';
 import {
   getCart,
@@ -8,19 +7,15 @@ import {
   removeCartItem,
   clearCart,
 } from '../../api/cart';
+import { useDialog } from '../../mobile/hooks/useDialog';
 
 export default function Cart() {
-  const navigate = useNavigate();
+  const { confirm } = useDialog();
   const [cart, setCart] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   // 장바구니 불러오기
   const fetchCart = async () => {
-    const token = localStorage.getItem('accessToken');
-    if (!token) {
-      navigate('/login');
-      return;
-    }
     try {
       const res = await getCart();
       setCart(res.data.data);
@@ -53,7 +48,7 @@ export default function Cart() {
 
   // 아이템 삭제
   const handleRemoveItem = async (itemId: number) => {
-    if (!window.confirm('장바구니에서 해당 상품을 삭제하시겠습니까?')) return;
+    if (!await confirm('장바구니에서 해당 상품을 삭제하시겠습니까?')) return;
     try {
       const res = await removeCartItem(itemId);
       setCart(res.data.data);
@@ -65,7 +60,7 @@ export default function Cart() {
 
   // 장바구니 비우기
   const handleClearCart = async () => {
-    if (!window.confirm('장바구니를 모두 비우시겠습니까?')) return;
+    if (!await confirm('장바구니를 모두 비우시겠습니까?')) return;
     try {
       await clearCart();
       setCart(null);
@@ -85,8 +80,7 @@ export default function Cart() {
   if (loading) {
     return (
       <div className="min-h-screen bg-[#FAFAFA]">
-        <Navigation />
-        <div className="pt-24 pb-16 px-8">
+        <div className="pt-4 pb-16 px-8">
           <div className="max-w-[1200px] mx-auto animate-pulse">
             <div className="h-10 bg-gray-100 rounded w-1/4 mb-4" />
             <div className="h-4 bg-gray-100 rounded w-1/3 mb-12" />
@@ -106,9 +100,8 @@ export default function Cart() {
 
   return (
     <div className="min-h-screen bg-[#FAFAFA]">
-      <Navigation />
 
-      <div className="pt-24 pb-16 px-8">
+      <div className="pt-4 pb-16 px-8">
         <div className="max-w-[1200px] mx-auto">
 
           {/* 헤더 */}

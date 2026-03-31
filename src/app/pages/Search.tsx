@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router';
 import { Search as SearchIcon, X, TrendingUp, Clock, ArrowLeft } from 'lucide-react';
-import Navigation from '../components/layouts/Header';
 import { useViewMode } from '../context/ViewModeContext';
 
 // Mock data for search results
@@ -60,9 +59,8 @@ export default function Search() {
 
   return (
     <div className="min-h-screen bg-[#FAFAFA]">
-      <Navigation />
       
-      <div className="pt-24 pb-16 px-8">
+      <div className="pt-4 pb-16 px-8">
         <div className="max-w-[1400px] mx-auto">
           {/* Search Header */}
           <div className="mb-8">

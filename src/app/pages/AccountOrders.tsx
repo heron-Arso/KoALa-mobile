@@ -1,10 +1,9 @@
-import { Link, useLocation, useNavigate } from 'react-router';
+import { Link } from 'react-router';
 import { Package, ChevronRight, Box } from 'lucide-react';
-import Navigation from '../components/layouts/Header';
-import AccountSidebar from '../components/layouts/AccountSidebar';
 import { useEffect, useState } from 'react';
 import { getMyProfile } from '../../api/user';
 import { getMyOrders, cancelOrder } from '../../api/order';
+import { useDialog } from '../../mobile/hooks/useDialog';
 
 const getStatusInfo = (status: string) => {
   const statuses: { [key: string]: { label: string; color: string } } = {
@@ -19,8 +18,7 @@ const getStatusInfo = (status: string) => {
 };
 
 export default function AccountOrders() {
-  const location = useLocation();
-  const navigate = useNavigate();
+  const { alert, confirm } = useDialog();
   const [user, setUser] = useState<any>(null);
   const [orders, setOrders] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -28,11 +26,6 @@ export default function AccountOrders() {
   const [totalPages, setTotalPages] = useState(0);
 
   useEffect(() => {
-    const token = localStorage.getItem('accessToken');
-    if (!token) {
-      navigate('/login');
-      return;
-    }
     const fetchData = async () => {
       try {
         const [profileRes, ordersRes] = await Promise.all([
@@ -52,7 +45,7 @@ export default function AccountOrders() {
   }, [page]);
 
   const handleCancel = async (orderNo: string) => {
-    if (!window.confirm('주문을 취소하시겠습니까?')) return;
+    if (!await confirm('주문을 취소하시겠습니까?')) return;
     try {
       await cancelOrder(orderNo);
       setOrders((prev) =>
@@ -61,35 +54,19 @@ export default function AccountOrders() {
         )
       );
     } catch (e: any) {
-      alert(e.response?.data?.message || '주문 취소에 실패했습니다.');
+      await alert(e.response?.data?.message || '주문 취소에 실패했습니다.');
     }
   };
 
   return (
     <div className="min-h-screen bg-[#FAFAFA]">
-      <Navigation />
+      <div className="pt-8 pb-16 px-4">
+        <div className="mb-6">
+          <h1 className="text-2xl font-bold tracking-tight mb-1">주문 내역</h1>
+          <p className="text-xs text-gray-400">총 {orders.length}개의 주문 내역</p>
+        </div>
 
-      <div className="pt-24 md:pt-32 pb-16 px-4 md:px-8 lg:px-12">
-        <div className="max-w-[1400px] mx-auto">
-          <div className="mb-8 md:mb-12">
-            <h1 className="text-2xl md:text-3xl font-bold tracking-tight mb-2">마이페이지</h1>
-            <p className="text-xs md:text-sm text-gray-400 font-medium">
-              회원님의 활동과 주문 내역을 관리하세요.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-            <div className="lg:col-span-1">
-              <AccountSidebar currentPath={location.pathname} user={user} />
-            </div>
-
-            <div className="lg:col-span-3">
-              <div className="mb-6 md:mb-8 px-1">
-                <h2 className="text-xl md:text-2xl font-bold mb-1 italic">Order History</h2>
-                <p className="text-xs md:text-sm text-gray-400 font-medium">
-                  총 {orders.length}개의 주문 내역
-                </p>
-              </div>
+        <div>
 
               {loading ? (
                 <div className="space-y-4 animate-pulse">
@@ -220,8 +197,6 @@ export default function AccountOrders() {
                   )}
                 </div>
               )}
-            </div>
-          </div>
         </div>
       </div>
     </div>

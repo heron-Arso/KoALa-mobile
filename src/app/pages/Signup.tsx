@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { Mail, Lock, User } from 'lucide-react';
-import Navigation from '../components/layouts/Header';
 import { signup, loginWithKakao, loginWithNaver } from '../../api/auth';
 
 export default function Signup() {
@@ -23,8 +22,9 @@ export default function Signup() {
       setError('비밀번호가 일치하지 않습니다.');
       return;
     }
-    if (password.length < 8) {
-      setError('비밀번호는 8자 이상이어야 합니다.');
+    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&^])[A-Za-z\d@$!%*#?&^]{8,}$/;
+    if (!passwordRegex.test(password)) {
+      setError('비밀번호는 8자 이상이며, 영문·숫자·특수문자(@$!%*#?&^)를 각각 포함해야 합니다.');
       return;
     }
     if (!agreed) {
@@ -34,12 +34,7 @@ export default function Signup() {
 
     setLoading(true);
     try {
-      const res = await signup({ name, email, password });
-      const { accessToken, refreshToken } = res.data.data;
-
-      localStorage.setItem('accessToken', accessToken);
-      localStorage.setItem('refreshToken', refreshToken);
-
+      await signup({ name, email, password });
       navigate('/onboarding');
     } catch (err: any) {
       setError(err.response?.data?.message || '회원가입에 실패했습니다.');
@@ -53,9 +48,8 @@ export default function Signup() {
 
   return (
     <div className="min-h-screen bg-[#FAFAFA]">
-      <Navigation />
 
-      <div className="pt-24 pb-16 px-8">
+      <div className="pt-4 pb-16 px-8">
         <div className="max-w-md mx-auto">
           {/* Header */}
           <div className="text-center mb-12">
@@ -129,7 +123,7 @@ export default function Signup() {
                   />
                 </div>
                 <p className="text-xs text-gray-400 mt-2">
-                  Must be at least 8 characters
+                  8자 이상, 영문·숫자·특수문자(@$!%*#?&^) 포함
                 </p>
               </div>
 

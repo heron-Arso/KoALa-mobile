@@ -6,21 +6,14 @@ export default function OAuth2Callback() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const accessToken = searchParams.get('accessToken');
-        const refreshToken = searchParams.get('refreshToken');
         const error = searchParams.get('error');
-
         if (error) {
             alert('소셜 로그인 실패');
             navigate('/login');
             return;
         }
-
-        if (accessToken && refreshToken) {
-            localStorage.setItem('accessToken', accessToken);
-            localStorage.setItem('refreshToken', refreshToken);
-            navigate('/');
-        }
+        // 토큰은 서버가 HttpOnly 쿠키로 설정 — 별도 저장 불필요
+        navigate('/');
     }, []);
 
     return (

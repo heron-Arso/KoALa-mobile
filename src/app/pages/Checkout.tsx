@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router';
 import { ArrowLeft, MapPin, CreditCard, Package, Check, ChevronRight } from 'lucide-react';
-import Navigation from '../components/layouts/Header';
 import { createOrder } from '../../api/order';
 import { getCart } from '../../api/cart';
 import { preparePayment } from '../../api/payment';
 import { loadTossPayments, ANONYMOUS } from '@tosspayments/tosspayments-sdk';
+import { useDialog } from '../../mobile/hooks/useDialog';
 
 type PaymentMethodType = 'TOSS' | 'KAKAOPAY' | 'NAVERPAY' | 'CARD';
 
@@ -26,6 +26,7 @@ const paymentMethods: PaymentMethod[] = [
 export default function Checkout() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { alert } = useDialog();
 
   const [cart, setCart] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -46,12 +47,6 @@ export default function Checkout() {
   });
 
   useEffect(() => {
-    const token = localStorage.getItem('accessToken');
-    if (!token) {
-      navigate('/login');
-      return;
-    }
-
     const fetchCart = async () => {
       try {
         const res = await getCart();
@@ -76,15 +71,15 @@ export default function Checkout() {
 
   const handleOrder = async () => {
     if (!selectedMethod) {
-      alert('결제 수단을 선택해 주세요.');
+      await alert('결제 수단을 선택해 주세요.');
       return;
     }
     if (!form.ordererName || !form.ordererEmail || !form.ordererPhone) {
-      alert('주문자 정보를 입력해 주세요.');
+      await alert('주문자 정보를 입력해 주세요.');
       return;
     }
     if (!form.recipientName || !form.recipientPhone || !form.zipCode || !form.address1) {
-      alert('배송지 정보를 입력해 주세요.');
+      await alert('배송지 정보를 입력해 주세요.');
       return;
     }
 
@@ -119,8 +114,11 @@ export default function Checkout() {
         ? `${cartItems[0].skuName}${cartItems.length > 1 ? ` 외 ${cartItems.length - 1}건` : ''}`
         : '주문';
 
-      const successUrl = `${window.location.origin}/payment/success`;
-      const failUrl = `${window.location.origin}/payment/fail`;
+      // Capacitor 앱에서는 window.location.origin이 "capacitor://localhost"로
+      // 잡혀 Toss 결제 콜백이 실패하므로 환경변수에서 직접 지정
+      const paymentBase = import.meta.env.VITE_PAYMENT_BASE_URL ?? window.location.origin;
+      const successUrl = `${paymentBase}/payment/success`;
+      const failUrl = `${paymentBase}/payment/fail`;
 
       if (selectedMethod === 'CARD') {
         await payment.requestPayment({
@@ -145,7 +143,7 @@ export default function Checkout() {
         });
       }
     } catch (e: any) {
-      alert(e.response?.data?.message || e.message || '결제 처리에 실패했습니다.');
+      await alert(e.response?.data?.message || e.message || '결제 처리에 실패했습니다.');
     } finally {
       setIsProcessing(false);
     }
@@ -154,8 +152,7 @@ export default function Checkout() {
   if (loading) {
     return (
       <div className="min-h-screen bg-[#FAFAFA]">
-        <Navigation />
-        <div className="pt-32 px-8 animate-pulse max-w-[1300px] mx-auto">
+        <div className="pt-4 px-8 animate-pulse max-w-[1300px] mx-auto">
           <div className="h-10 bg-gray-100 rounded w-1/4 mb-8" />
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
             <div className="lg:col-span-2 space-y-6">
@@ -171,9 +168,8 @@ export default function Checkout() {
 
   return (
     <div className="min-h-screen bg-[#FAFAFA]">
-      <Navigation />
 
-      <div className="pt-24 pb-20 px-8">
+      <div className="pt-4 pb-20 px-8">
         <div className="max-w-[1300px] mx-auto">
           <button
             onClick={() => navigate('/cart')}

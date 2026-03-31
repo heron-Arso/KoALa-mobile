@@ -1,4 +1,3 @@
-import Navigation from '../../components/layouts/Header';
 import { useParams, Link, useNavigate } from 'react-router';
 import { ArrowLeft, Play, Share2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
@@ -126,8 +125,7 @@ export default function ArtistDetail() {
   if (loading) {
     return (
       <div className="min-h-screen bg-white">
-        <Navigation />
-        <div className="pt-32 pb-32 px-6 animate-pulse">
+        <div className="pt-4 pb-32 px-6 animate-pulse">
           <div className="max-w-[1600px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16">
             <div className="aspect-[3/4] bg-gray-100 rounded-[3rem]" />
             <div className="space-y-6 pt-8">
@@ -144,8 +142,7 @@ export default function ArtistDetail() {
   if (!artist) {
     return (
       <div className="min-h-screen bg-white">
-        <Navigation />
-        <div className="pt-32 pb-32 px-6 text-center">
+        <div className="pt-4 pb-32 px-6 text-center">
           <div className="max-w-md mx-auto">
             <h1 className="text-2xl font-bold mb-4">작가를 찾을 수 없습니다.</h1>
             <Link to="/artist-lab" className="text-sm underline text-gray-500">
@@ -159,9 +156,8 @@ export default function ArtistDetail() {
 
   return (
     <div className="min-h-screen bg-white">
-      <Navigation />
 
-      <main className="pt-24 md:pt-32 pb-24 px-5 md:px-8">
+      <main className="pt-4 pb-24 px-5 md:px-8">
         <div className="max-w-[1600px] mx-auto">
 
           {/* 상단 컨트롤 바 */}

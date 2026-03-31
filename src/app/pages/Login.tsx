@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { Mail, Lock } from 'lucide-react';
-import Navigation from '../components/layouts/Header';
 import { login, loginWithKakao, loginWithNaver } from '../../api/auth';
 
 export default function Login() {
@@ -17,12 +16,7 @@ export default function Login() {
     setLoading(true);
 
     try {
-      const res = await login({ email, password });
-      const { accessToken, refreshToken } = res.data.data;
-
-      localStorage.setItem('accessToken', accessToken);
-      localStorage.setItem('refreshToken', refreshToken);
-
+      await login({ email, password });
       navigate('/');
     } catch (err: any) {
       setError(err.response?.data?.message || '로그인에 실패했습니다.');
@@ -36,9 +30,8 @@ export default function Login() {
 
   return (
     <div className="min-h-screen bg-[#FAFAFA]">
-      <Navigation />
 
-      <div className="pt-24 pb-16 px-8">
+      <div className="pt-4 pb-16 px-8">
         <div className="max-w-md mx-auto">
           {/* Header */}
           <div className="text-center mb-12">

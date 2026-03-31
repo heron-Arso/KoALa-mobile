@@ -1,6 +1,5 @@
 import { Link, useLocation, useNavigate } from 'react-router';
 import { CheckCircle, Package, MapPin, CreditCard, ChevronRight, Home } from 'lucide-react';
-import Navigation from '../components/layouts/Header';
 import { useEffect, useState } from 'react';
 
 export default function CheckoutSuccess() {
@@ -33,9 +32,8 @@ export default function CheckoutSuccess() {
 
   return (
     <div className="min-h-screen bg-[#FAFAFA]">
-      <Navigation />
 
-      <div className="pt-24 pb-20 px-8">
+      <div className="pt-4 pb-20 px-8">
         <div className="max-w-2xl mx-auto">
 
           {/* 성공 섹션 */}

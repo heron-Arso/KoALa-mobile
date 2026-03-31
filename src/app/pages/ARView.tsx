@@ -1,4 +1,3 @@
-import Navigation from '../components/layouts/Header';
 import { useState, useEffect } from 'react';
 import { RotateCcw, Move, ZoomIn, ZoomOut, Maximize2, CheckCircle2, X, Camera, Info } from 'lucide-react';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
@@ -44,11 +43,6 @@ export default function ARView() {
 
   const handleAddToCart = async () => {
     if (!sku) return;
-    const token = localStorage.getItem('accessToken');
-    if (!token) {
-      navigate('/login');
-      return;
-    }
     setCartLoading(true);
     try {
       await addCartItem(sku.skuCode, 1);
@@ -75,7 +69,6 @@ export default function ARView() {
 
   return (
     <div className="min-h-screen bg-white overflow-hidden">
-      <Navigation />
 
       {/* Toast */}
       {showToast && (
@@ -97,7 +90,7 @@ export default function ARView() {
         </div>
       )}
 
-      <div className="pt-24 h-screen flex flex-col">
+      <div className="pt-4 h-screen flex flex-col">
         <div className="flex-1 relative bg-gradient-to-br from-gray-50 to-white overflow-hidden">
 
           {/* 중앙 뷰어 */}

@@ -2,12 +2,14 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { User, MapPin, Heart, Bell, Check, ChevronRight } from 'lucide-react';
 import { useFirstLaunch } from '../../mobile/hooks/useFirstLaunch';
+import { useDialog } from '../../mobile/hooks/useDialog';
 
 type OnboardingStep = 'welcome' | 'nickname' | 'address' | 'preferences' | 'notifications';
 
 export default function Onboarding() {
   const navigate = useNavigate();
   const { markOnboardingComplete } = useFirstLaunch();
+  const { alert } = useDialog();
   const [currentStep, setCurrentStep] = useState<OnboardingStep>('welcome');
   const [formData, setFormData] = useState({
     nickname: '',
@@ -47,12 +49,12 @@ export default function Onboarding() {
     }
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (currentStep === 'welcome') {
       setCurrentStep('nickname');
     } else if (currentStep === 'nickname') {
       if (!formData.nickname.trim()) {
-        alert('닉네임을 입력해 주세요.');
+        await alert('닉네임을 입력해 주세요.');
         return;
       }
       setCurrentStep('address');

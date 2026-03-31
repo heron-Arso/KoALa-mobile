@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router';
 import { ArrowLeft, MapPin, CreditCard, Package, AlertCircle } from 'lucide-react';
-import Navigation from '../components/layouts/Header';
 
 const paymentMethodNames: Record<string, { name: string, nameKo: string, icon: string }> = {
   toss: { name: 'Toss Pay', nameKo: '토스페이', icon: '💙' },
@@ -59,9 +58,8 @@ export default function OrderConfirmation() {
 
   return (
     <div className="min-h-screen bg-[#FAFAFA]">
-      <Navigation />
       
-      <div className="pt-24 pb-16 px-8">
+      <div className="pt-4 pb-16 px-8">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
           <button
