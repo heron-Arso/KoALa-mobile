@@ -6,4 +6,4 @@
 
 `npm i`를 실행하여 종속성을 설치합니다.
 
-`npm run dev`를 실행하여 개발 서버를 시작합니다.
+`npm run dev`를 실행하여 개발 서버를 시작합니다.# KoALa-mobile
