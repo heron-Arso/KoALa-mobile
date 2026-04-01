@@ -6,8 +6,7 @@ import ARView from "./pages/ARView";
 import ResellMarket from "./pages/ResellMarket";
 import ProductDetail from "./pages/ProductDetail";
 import ArtistDetail from "./pages/Artist/ArtistDetail";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
+import Auth from "./pages/Auth";
 import Onboarding from "./pages/Onboarding";
 import Search from "./pages/Search";
 import Cart from "./pages/Cart";
@@ -37,8 +36,8 @@ export function AppRoutes() {
       <Route path="/ar-view" element={<ARView />} />
       <Route path="/resell" element={<ResellMarket />} />
       <Route path="/search" element={<Search />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<Signup />} />
+      <Route path="/login" element={<Auth />} />
+      <Route path="/signup" element={<Auth />} />
       <Route path="/onboarding" element={<Onboarding />} />
       <Route path="/cart" element={<Cart />} />
       <Route path="/checkout" element={<Checkout />} />

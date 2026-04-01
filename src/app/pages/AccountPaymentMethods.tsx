@@ -1,5 +1,6 @@
 import { CreditCard, Plus, Smartphone } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 import { getMyProfile } from '../../api/user';
 
 const paymentOptions = [
@@ -10,10 +11,13 @@ const paymentOptions = [
 ];
 
 export default function AccountPaymentMethods() {
+  const navigate = useNavigate();
   const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
-    getMyProfile().then((res) => setUser(res.data.data)).catch(console.error);
+    getMyProfile()
+      .then((res) => setUser(res.data.data))
+      .catch(() => navigate('/login'));
   }, []);
 
   return (

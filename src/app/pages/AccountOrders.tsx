@@ -1,4 +1,4 @@
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { Package, ChevronRight, Box } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { getMyProfile } from '../../api/user';
@@ -18,6 +18,7 @@ const getStatusInfo = (status: string) => {
 };
 
 export default function AccountOrders() {
+  const navigate = useNavigate();
   const { alert, confirm } = useDialog();
   const [user, setUser] = useState<any>(null);
   const [orders, setOrders] = useState<any[]>([]);
@@ -29,14 +30,14 @@ export default function AccountOrders() {
     const fetchData = async () => {
       try {
         const [profileRes, ordersRes] = await Promise.all([
-          getMyProfile(),
-          getMyOrders(page, 10),
+          getMyProfile(),          getMyOrders(page, 10),
         ]);
         setUser(profileRes.data.data);
         setOrders(ordersRes.data.data.content ?? []);
         setTotalPages(ordersRes.data.data.totalPages ?? 0);
-      } catch (e) {
-        console.error('주문 내역 로딩 실패:', e);
+      } catch {
+        navigate('/login');
+        return;
       } finally {
         setLoading(false);
       }

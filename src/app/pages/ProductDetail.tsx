@@ -71,6 +71,11 @@ export default function ProductDetail() {
       window.dispatchEvent(new Event('cart-updated'));
       showToastMessage('장바구니에 담겼습니다.');
     } catch (e: any) {
+      if (e?.code === 'AUTH_REQUIRED') {
+        showToastMessage('로그인이 필요합니다.');
+        setTimeout(() => navigate('/login'), 1500);
+        return;
+      }
       showToastMessage(e.response?.data?.message || '장바구니 담기 실패');
     } finally {
       setCartLoading(false);
@@ -89,6 +94,11 @@ export default function ProductDetail() {
         showToastMessage('위시리스트에 추가됐습니다.');
       }
     } catch (e: any) {
+      if (e?.code === 'AUTH_REQUIRED') {
+        showToastMessage('로그인이 필요합니다.');
+        setTimeout(() => navigate('/login'), 1500);
+        return;
+      }
       showToastMessage(e.response?.data?.message || '오류가 발생했습니다.');
     }
   };

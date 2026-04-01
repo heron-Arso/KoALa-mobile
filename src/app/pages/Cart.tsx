@@ -1,4 +1,4 @@
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { Minus, Plus, Trash2, ShoppingBag, ArrowLeft } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import {
@@ -10,6 +10,7 @@ import {
 import { useDialog } from '../../mobile/hooks/useDialog';
 
 export default function Cart() {
+  const navigate = useNavigate();
   const { confirm } = useDialog();
   const [cart, setCart] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -19,8 +20,9 @@ export default function Cart() {
     try {
       const res = await getCart();
       setCart(res.data.data);
-    } catch (e) {
-      console.error('장바구니 로딩 실패:', e);
+    } catch {
+      navigate('/login');
+      return;
     } finally {
       setLoading(false);
     }

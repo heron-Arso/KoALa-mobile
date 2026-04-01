@@ -3,6 +3,7 @@ import { AppRoutes } from './routes.tsx';
 import { ViewModeProvider } from './context/ViewModeContext';
 import ScrollToTop from './components/common/ScrollToTop';
 import StartupFlow from '../mobile/screens/StartupFlow';
+import BottomNav from '../mobile/components/BottomNav';
 
 function App() {
   return (
@@ -11,9 +12,10 @@ function App() {
         <ScrollToTop />
         <ViewModeProvider>
           <div className="min-h-screen bg-[#FAFAFA] flex flex-col">
-            <main className="flex-1">
+            <main className="flex-1 pb-20">
               <AppRoutes />
             </main>
+            <BottomNav />
           </div>
         </ViewModeProvider>
       </StartupFlow>

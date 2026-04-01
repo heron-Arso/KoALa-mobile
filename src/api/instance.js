@@ -25,7 +25,9 @@ instance.interceptors.response.use(
                 );
                 return instance(originalRequest);
             } catch {
-                window.location.href = '/login';
+                return Promise.reject(
+                    Object.assign(new Error('AUTH_REQUIRED'), { code: 'AUTH_REQUIRED' })
+                );
             }
         }
         return Promise.reject(error);

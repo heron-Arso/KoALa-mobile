@@ -23,8 +23,9 @@ export default function AccountWishlist() {
                 ]);
                 setWishlist(wishlistRes.data.data.content ?? []);
                 setTotalPages(wishlistRes.data.data.totalPages ?? 0);
-            } catch (e) {
-                console.error('위시리스트 로딩 실패:', e);
+            } catch {
+                navigate('/login');
+                return;
             } finally {
                 setLoading(false);
             }

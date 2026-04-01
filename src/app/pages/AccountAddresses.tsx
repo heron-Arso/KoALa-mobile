@@ -1,12 +1,16 @@
 import { Plus } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 import { getMyProfile } from '../../api/user';
 
 export default function AccountAddresses() {
+  const navigate = useNavigate();
   const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
-    getMyProfile().then((res) => setUser(res.data.data)).catch(console.error);
+    getMyProfile()
+      .then((res) => setUser(res.data.data))
+      .catch(() => navigate('/login'));
   }, []);
 
   return (

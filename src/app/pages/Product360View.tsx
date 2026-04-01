@@ -141,6 +141,11 @@ export default function Product360View() {
       setShowToast(true);
       setTimeout(() => setShowToast(false), 3000);
     } catch (e: any) {
+      if (e?.code === 'AUTH_REQUIRED') {
+        await alert('로그인이 필요합니다.');
+        navigate('/login');
+        return;
+      }
       await alert(e.response?.data?.message || '장바구니 담기 실패');
     } finally {
       setCartLoading(false);
