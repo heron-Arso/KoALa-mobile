@@ -1,6 +1,6 @@
 import { Link } from 'react-router';
 import { Heart, Sparkles } from 'lucide-react';
-import { ImageWithFallback } from '../figma/ImageWithFallback';
+import { ImageWithFallback } from '@/app/components/figma/ImageWithFallback';
 
 interface ArtworkCardProps {
   id: string;
@@ -70,7 +70,7 @@ export default function ArtworkCard({
         <p className="text-sm text-gray-500 mb-2">{artist}</p>
         {price && (
           <p className="text-sm">
-            ${price.toLocaleString()}
+            ₩{price.toLocaleString()}
           </p>
         )}
       </div>

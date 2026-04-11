@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from 'react-router';
 import { Home, Search, ShoppingCart, Heart, User } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { getCart } from '../../api/cart';
+import { getCart } from '@/api/cart';
 
 // 바텀 네비게이션을 숨길 라우트
 const HIDDEN_ROUTES = [
@@ -50,7 +50,8 @@ export default function BottomNav() {
             getCart()
                 .then((res: any) => {
                     const items = res.data?.data?.items ?? [];
-                    setCartCount(items.length);
+                    const total = items.reduce((sum: number, item: any) => sum + (item.quantity || 1), 0);
+                    setCartCount(total);
                 })
                 .catch(() => setCartCount(0));
         };

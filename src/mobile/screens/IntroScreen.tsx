@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { Capacitor } from '@capacitor/core';
-import { useStatusBar } from '../hooks/useStatusBar';
+import { useStatusBar } from '@/mobile/hooks/useStatusBar';
 
 interface IntroScreenProps {
   onComplete: () => void;

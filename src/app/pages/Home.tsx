@@ -1,8 +1,8 @@
 import { ArrowRight, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router';
 import { useRef, useEffect, useState } from 'react';
-import { getSkus, getGenreCounts } from '../../api/sku';
-import { getBanners } from '../../api/banner';
+import { getSkus, getGenreCounts } from '@/api/sku';
+import { getBanners } from '@/api/banner';
 
 // 백엔드 genre 값 → 카테고리 ID 매핑
 const GENRE_TO_CATEGORY: Record<string, string> = {

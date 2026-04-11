@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
-import IntroScreen from './IntroScreen';
-import { useFirstLaunch } from '../hooks/useFirstLaunch';
+import IntroScreen from '@/mobile/screens/IntroScreen';
+import { useFirstLaunch } from '@/mobile/hooks/useFirstLaunch';
 
 interface StartupFlowProps {
   children: React.ReactNode;

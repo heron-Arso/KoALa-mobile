@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    KoALa Android 네트워크 보안 설정
+
+    [개발 환경]
+    - localhost / 10.0.2.2 (에뮬레이터) HTTP 허용
+
+    [프로덕션]
+    - 기본적으로 cleartext(HTTP) 트래픽 차단
+    - 시스템 CA 인증서만 신뢰 (사용자 설치 CA 불신)
+
+    [인증서 피닝 적용 방법]
+    배포 준비가 되면 아래 주석을 해제하고 실제 값으로 교체하세요.
+
+    핀 값 추출 명령:
+      openssl s_client -connect api.your-domain.com:443 | \
+      openssl x509 -pubkey -noout | \
+      openssl pkey -pubin -outform der | \
+      openssl dgst -sha256 -binary | base64
+
+    만료일(expiration)은 인증서 갱신 주기보다 넉넉하게 설정하고
+    반드시 백업 핀(pin2)을 함께 등록하세요.
+-->
+<network-security-config>
+
+    <!-- 기본: HTTP 차단 + 시스템 CA만 신뢰 -->
+    <base-config cleartextTrafficPermitted="false">
+        <trust-anchors>
+            <!-- 시스템 CA만 신뢰 (사용자가 설치한 CA 불신 → MITM 방지) -->
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+
+    <!-- 개발 환경: localhost HTTP 허용 -->
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">localhost</domain>
+        <domain includeSubdomains="true">10.0.2.2</domain>  <!-- 에뮬레이터 host -->
+        <domain includeSubdomains="true">192.168.0.0</domain> <!-- 로컬 네트워크 개발 시 필요하면 수정 -->
+        <trust-anchors>
+            <certificates src="system" />
+            <!-- 개발 환경에서 자체 서명 인증서 사용 시 아래 주석 해제 -->
+            <!-- <certificates src="user" /> -->
+        </trust-anchors>
+    </domain-config>
+
+    <!--
+    ============================================================
+    [TODO: 배포 전 적용] 프로덕션 인증서 피닝
+    api.your-domain.com 을 실제 API 도메인으로 교체하세요.
+    ============================================================
+    <domain-config>
+        <domain includeSubdomains="true">api.your-domain.com</domain>
+        <pin-set expiration="2027-12-31">
+            현재 인증서 공개키 SHA-256 (base64)
+            <pin digest="SHA-256">REPLACE_WITH_YOUR_CERT_PUBLIC_KEY_SHA256_BASE64==</pin>
+            백업 인증서 핀 (인증서 교체 대비 필수)
+            <pin digest="SHA-256">REPLACE_WITH_BACKUP_CERT_PUBLIC_KEY_SHA256_BASE64==</pin>
+        </pin-set>
+    </domain-config>
+    -->
+
+</network-security-config>

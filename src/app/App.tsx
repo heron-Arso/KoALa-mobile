@@ -1,9 +1,9 @@
 import { BrowserRouter } from 'react-router';
-import { AppRoutes } from './routes.tsx';
-import { ViewModeProvider } from './context/ViewModeContext';
-import ScrollToTop from './components/common/ScrollToTop';
-import StartupFlow from '../mobile/screens/StartupFlow';
-import BottomNav from '../mobile/components/BottomNav';
+import { AppRoutes } from '@/app/routes';
+import { ViewModeProvider } from '@/app/context/ViewModeContext';
+import ScrollToTop from '@/app/components/common/ScrollToTop';
+import StartupFlow from '@/mobile/screens/StartupFlow';
+import BottomNav from '@/mobile/components/BottomNav';
 
 function App() {
   return (

@@ -17,7 +17,9 @@ const config: CapacitorConfig = {
     },
   },
   android: {
-    allowMixedContent: true,      // HTTP/HTTPS 혼용 허용 (개발 중)
+    // ⚠️  allowMixedContent: true 는 프로덕션 빌드에서 절대 사용 금지
+    // 로컬 개발 중 HTTP localhost가 필요할 때만 임시로 주석 해제
+    // allowMixedContent: true,
     backgroundColor: '#000000',
   },
 };
