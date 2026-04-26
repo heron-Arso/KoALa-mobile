@@ -1,7 +1,7 @@
 import { Play, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router';
 import { useEffect, useState } from 'react';
-import { ImageWithFallback } from '@/app/components/figma/ImageWithFallback';
+import { ImageWithFallback } from '@/app/components/fallback/ImageWithFallback';
 import { getArtists } from '@/api/artist';
 
 // ── 영상 플레이어 컴포넌트 ─────────────────────────────

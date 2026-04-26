@@ -21,6 +21,13 @@ import ForgotPassword from "@/app/pages/auth/ForgotPassword";
 import Onboarding from "@/app/pages/auth/Onboarding";
 import OAuth2Callback from "@/app/pages/auth/OAuth2Callback";
 
+// 약관
+import Terms from "@/app/pages/legal/Terms";
+import Privacy from "@/app/pages/legal/Privacy";
+
+// 404
+import NotFound from "@/app/pages/NotFound";
+
 // 주문
 import Cart from "@/app/pages/order/Cart";
 import Checkout from "@/app/pages/order/Checkout";
@@ -65,6 +72,8 @@ export function AppRoutes() {
       <Route path="/forgot-password" element={<ForgotPassword />} /> {/* 비밀번호 찾기 */}
       <Route path="/onboarding" element={<Onboarding />} />          {/* 온보딩 */}
       <Route path="/oauth2/callback" element={<OAuth2Callback />} /> {/* 소셜 로그인 콜백 */}
+      <Route path="/terms" element={<Terms />} />                    {/* 이용약관 */}
+      <Route path="/privacy" element={<Privacy />} />                {/* 개인정보처리방침 */}
 
       {/* ── 장바구니 / 주문 ───────────────────────────── */}
       <Route path="/cart" element={<Cart />} />                                {/* 장바구니 */}
@@ -83,6 +92,9 @@ export function AppRoutes() {
       <Route path="/account/addresses" element={<AccountAddresses />} />            {/* 배송지 관리 */}
       <Route path="/account/payment-methods" element={<AccountPaymentMethods />} /> {/* 결제 수단 */}
       <Route path="/account/wishlist" element={<AccountWishlist />} />              {/* 위시리스트 */}
+
+      {/* ── 404 ───────────────────────────────────────── */}
+      <Route path="*" element={<NotFound />} />                                    {/* 404 */}
 
     </Routes>
   );

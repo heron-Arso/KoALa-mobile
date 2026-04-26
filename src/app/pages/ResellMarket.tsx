@@ -1,7 +1,7 @@
 import { Filter, TrendingUp, Shield, Globe, ArrowLeft } from 'lucide-react';
 import { Link, useNavigate } from 'react-router';
 import { useState } from 'react';
-import { ImageWithFallback } from '@/app/components/figma/ImageWithFallback';
+import { ImageWithFallback } from '@/app/components/fallback/ImageWithFallback';
 
 const filters = ['전체', '아트 토이', '조각', '세라믹', '리미티드 에디션'];
 

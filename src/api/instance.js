@@ -25,6 +25,8 @@ instance.interceptors.response.use(
                 );
                 return instance(originalRequest);
             } catch {
+                // 리프레시도 실패 → 세션 만료, 로그인 페이지로 이동
+                window.location.href = '/login';
                 return Promise.reject(
                     Object.assign(new Error('AUTH_REQUIRED'), { code: 'AUTH_REQUIRED' })
                 );

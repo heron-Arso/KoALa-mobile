@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { ArrowLeft, RotateCcw, ZoomIn, ZoomOut, Camera, CheckCircle2, X } from 'lucide-react';
 import { Link, useNavigate, useSearchParams } from 'react-router';
-import { ImageWithFallback } from '@/app/components/figma/ImageWithFallback';
+import { ImageWithFallback } from '@/app/components/fallback/ImageWithFallback';
 import { getSku } from '@/api/sku';
 import { addCartItem } from '@/api/cart';
 import { useDialog } from '@/mobile/hooks/useDialog';

@@ -22,6 +22,57 @@ const config: CapacitorConfig = {
     // allowMixedContent: true,
     backgroundColor: '#000000',
   },
+
+  // ── iOS 인증서 피닝 (npx cap add ios 실행 후 적용) ───────────────────────────
+  //
+  // iOS 인증서 피닝은 네이티브 코드(AppDelegate.swift)에서 TrustKit으로 구현합니다.
+  //
+  // [설치]
+  //   1. ios/App/Podfile 에 추가:
+  //        pod 'TrustKit'
+  //   2. pod install
+  //
+  // [AppDelegate.swift 설정]
+  //   import TrustKit
+  //
+  //   func application(_ application: UIApplication,
+  //                    didFinishLaunchingWithOptions ...) -> Bool {
+  //     let trustKitConfig: [String: Any] = [
+  //       kTSKSwizzleNetworkDelegates: true,
+  //       kTSKPinnedDomains: [
+  //         "api.your-domain.com": [
+  //           kTSKEnforcePinning: true,
+  //           kTSKIncludeSubdomains: true,
+  //           kTSKExpirationDate: "2027-12-31",
+  //           kTSKPublicKeyHashes: [
+  //             "REPLACE_WITH_YOUR_CERT_PUBLIC_KEY_SHA256_BASE64==",  // 현재 인증서
+  //             "REPLACE_WITH_BACKUP_CERT_PUBLIC_KEY_SHA256_BASE64==", // 백업 핀
+  //           ],
+  //         ],
+  //       ],
+  //     ]
+  //     TrustKit.initSharedInstance(withConfiguration: trustKitConfig)
+  //     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
+  //   }
+  //
+  // [핀 값 추출]
+  //   openssl s_client -connect api.your-domain.com:443 | \
+  //   openssl x509 -pubkey -noout | \
+  //   openssl pkey -pubin -outform der | \
+  //   openssl dgst -sha256 -binary | base64
+  //
+  // [Info.plist NSAppTransportSecurity — 개발용 HTTP 허용 시]
+  //   <key>NSAppTransportSecurity</key>
+  //   <dict>
+  //     <key>NSAllowsArbitraryLoads</key><false/>
+  //     <key>NSExceptionDomains</key>
+  //     <dict>
+  //       <key>localhost</key>
+  //       <dict>
+  //         <key>NSExceptionAllowsInsecureHTTPLoads</key><true/>
+  //       </dict>
+  //     </dict>
+  //   </dict>
 };
 
 export default config;

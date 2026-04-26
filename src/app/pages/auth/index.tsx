@@ -305,20 +305,29 @@ export default function Auth() {
                     </div>
                   </div>
 
-                  <label className="flex items-start gap-3 cursor-pointer">
+                  <div className="flex items-start gap-3">
                     <input
+                      id="agree-terms"
                       type="checkbox"
                       checked={agreed}
                       onChange={(e) => setAgreed(e.target.checked)}
-                      className="w-4 h-4 mt-0.5 rounded border-gray-300 flex-shrink-0"
+                      className="w-4 h-4 mt-0.5 rounded border-gray-300 flex-shrink-0 cursor-pointer"
                     />
-                    <span className="text-xs text-gray-600 leading-relaxed">
-                      <Link to="/terms" className="text-black hover:underline">이용약관</Link>
+                    <label htmlFor="agree-terms" className="text-xs text-gray-600 leading-relaxed cursor-pointer select-none">
+                      <Link
+                        to="/terms"
+                        className="text-black underline underline-offset-2"
+                        onClick={(e) => e.stopPropagation()}
+                      >이용약관</Link>
                       {' '}및{' '}
-                      <Link to="/privacy" className="text-black hover:underline">개인정보 처리방침</Link>
+                      <Link
+                        to="/privacy"
+                        className="text-black underline underline-offset-2"
+                        onClick={(e) => e.stopPropagation()}
+                      >개인정보 처리방침</Link>
                       에 동의합니다
-                    </span>
-                  </label>
+                    </label>
+                  </div>
 
                   <button
                     type="submit"
