@@ -10,20 +10,20 @@ export const updateMyProfile = (data) =>
 
 // 내 배송지 목록 조회
 export const getMyAddresses = () =>
-    instance.get('/api/v1/users/addresses');
+    instance.get('/api/v1/users/me/addresses');
 
 // 배송지 추가
 export const createAddress = (data) =>
-    instance.post('/api/v1/users/addresses', data);
+    instance.post('/api/v1/users/me/addresses', data);
 
 // 배송지 수정
 export const updateAddress = (addressId, data) =>
-    instance.patch(`/api/v1/users/addresses/${addressId}`, data);
+    instance.put(`/api/v1/users/me/addresses/${addressId}`, data);
 
 // 기본 배송지 설정
 export const setDefaultAddress = (addressId) =>
-    instance.patch(`/api/v1/users/addresses/${addressId}/default`);
+    instance.patch(`/api/v1/users/me/addresses/${addressId}/default`);
 
 // 배송지 삭제
 export const deleteAddress = (addressId) =>
-    instance.delete(`/api/v1/users/addresses/${addressId}`);
+    instance.delete(`/api/v1/users/me/addresses/${addressId}`);

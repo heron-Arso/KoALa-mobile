@@ -12,11 +12,9 @@ export const login = (data) =>
 export const logout = () =>
     instance.post('/api/v1/auth/logout');
 
-// 토큰 재발급
-export const refresh = (refreshToken) =>
-    instance.post('/api/v1/auth/refresh', null, {
-        headers: { 'X-Refresh-Token': refreshToken },
-    });
+// 토큰 재발급 (refreshToken은 HttpOnly 쿠키로 자동 전송)
+export const refresh = () =>
+    instance.post('/api/v1/auth/refresh', null, { withCredentials: true });
 
 // 비밀번호 재설정 — 인증코드 발송
 export const sendPasswordResetCode = (email) =>

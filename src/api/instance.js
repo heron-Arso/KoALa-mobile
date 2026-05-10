@@ -25,11 +25,10 @@ instance.interceptors.response.use(
                 );
                 return instance(originalRequest);
             } catch {
-                // 리프레시도 실패 → 세션 만료, 로그인 페이지로 이동
-                window.location.href = '/login';
-                return Promise.reject(
-                    Object.assign(new Error('AUTH_REQUIRED'), { code: 'AUTH_REQUIRED' })
-                );
+                // 리프레시도 만료 → 인증 만료 이벤트 발행 (AuthContext가 수신)
+                // window.location.href = '/login' 쓰면 전체 리로드 → getMyProfile 재호출 → 무한루프
+                window.dispatchEvent(new Event('auth:expired'));
+                return Promise.reject(error);
             }
         }
         return Promise.reject(error);
