@@ -33,8 +33,16 @@ export default function Checkout() {
   const [loading, setLoading] = useState(true);
   const [selectedMethod, setSelectedMethod] = useState<PaymentMethodType | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [profile, setProfile] = useState<any>(null);
   const [addresses, setAddresses] = useState<any[]>([]);
   const [selectedAddressId, setSelectedAddressId] = useState<number | string>('');
+  const [agreed, setAgreed] = useState({ purchase: false, privacy: false, terms: false });
+  const allAgreed = agreed.purchase && agreed.privacy && agreed.terms;
+
+  const toggleAll = () => {
+    const next = !allAgreed;
+    setAgreed({ purchase: next, privacy: next, terms: next });
+  };
 
   // 배송지 폼
   const [form, setForm] = useState({
@@ -55,6 +63,7 @@ export default function Checkout() {
         // 사용자 프로필 로드
         const profileRes = await getMyProfile();
         const profile = profileRes?.data?.data;
+        setProfile(profile);
 
         // 사용자 주소 목록 로드
         const addressRes = await getMyAddresses();
@@ -193,7 +202,8 @@ export default function Checkout() {
 
       // 3단계: Toss 결제창 호출
       const tossPayments = await loadTossPayments(import.meta.env.VITE_TOSS_CLIENT_KEY);
-      const payment = tossPayments.payment({ customerKey: ANONYMOUS });
+      const customerKey = profile?.id ? String(profile.id) : ANONYMOUS;
+      const payment = tossPayments.payment({ customerKey });
 
       const orderName = cartItems.length > 0
         ? `${cartItems[0].skuName}${cartItems.length > 1 ? ` 외 ${cartItems.length - 1}건` : ''}`
@@ -495,10 +505,45 @@ export default function Checkout() {
                   </div>
                 </div>
 
+                {/* 구매 동의 */}
+                <div className="mb-6 space-y-3">
+                  <label className="flex items-center gap-3 cursor-pointer group">
+                    <div
+                      onClick={toggleAll}
+                      className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-colors flex-shrink-0 ${allAgreed ? 'bg-black border-black' : 'border-gray-300'}`}
+                    >
+                      {allAgreed && <Check className="w-3 h-3 text-white" />}
+                    </div>
+                    <span className="text-sm font-bold text-gray-900">아래 약관에 모두 동의합니다</span>
+                  </label>
+                  <div className="border-t border-gray-100 pt-3 space-y-2 pl-1">
+                    {[
+                      { key: 'purchase' as const, label: '구매조건 확인 및 결제 진행에 동의', href: '/returns' },
+                      { key: 'privacy' as const, label: '개인정보 제3자 제공에 동의', href: '/privacy' },
+                      { key: 'terms' as const, label: '서비스 이용약관에 동의', href: '/terms' },
+                    ].map(({ key, label, href }) => (
+                      <label key={key} className="flex items-center justify-between gap-2 cursor-pointer">
+                        <div className="flex items-center gap-2">
+                          <div
+                            onClick={() => setAgreed((prev) => ({ ...prev, [key]: !prev[key] }))}
+                            className={`w-4 h-4 rounded border-2 flex items-center justify-center transition-colors flex-shrink-0 ${agreed[key] ? 'bg-black border-black' : 'border-gray-300'}`}
+                          >
+                            {agreed[key] && <Check className="w-2.5 h-2.5 text-white" />}
+                          </div>
+                          <span className="text-xs text-gray-600">
+                            <span className="text-red-500 font-medium">[필수]</span> {label}
+                          </span>
+                        </div>
+                        <a href={href} className="text-[10px] text-gray-400 underline whitespace-nowrap flex-shrink-0">보기</a>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+
                 <button
                   onClick={handleOrder}
-                  disabled={cartItems.length === 0 || !selectedMethod || isProcessing}
-                  className={`w-full py-5 rounded-2xl font-bold flex items-center justify-center gap-2 transition-all shadow-lg ${cartItems.length > 0 && selectedMethod && !isProcessing
+                  disabled={cartItems.length === 0 || !selectedMethod || !allAgreed || isProcessing}
+                  className={`w-full py-5 rounded-2xl font-bold flex items-center justify-center gap-2 transition-all shadow-lg ${cartItems.length > 0 && selectedMethod && allAgreed && !isProcessing
                       ? 'bg-black text-white hover:bg-gray-800 shadow-black/10 active:scale-[0.98]'
                       : 'bg-gray-100 text-gray-300 cursor-not-allowed shadow-none'
                     }`}

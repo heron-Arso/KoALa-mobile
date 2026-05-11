@@ -1,19 +1,28 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router';
 import { confirmPayment } from '@/api/payment';
+import { getOrder } from '@/api/order';
+
+type Status = 'pending' | 'success' | 'error';
 
 export default function PaymentSuccess() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const [error, setError] = useState('');
+
+  const [status, setStatus] = useState<Status>('pending');
+  const [errorMsg, setErrorMsg] = useState('');
+  const calledRef = useRef(false);
 
   useEffect(() => {
+    if (calledRef.current) return;
+    calledRef.current = true;
+
     const paymentKey = searchParams.get('paymentKey');
-    const orderId = searchParams.get('orderId');
-    const amount = searchParams.get('amount');
+    const orderId    = searchParams.get('orderId');
+    const amount     = searchParams.get('amount');
 
     if (!paymentKey || !orderId || !amount) {
-      navigate('/');
+      navigate('/', { replace: true });
       return;
     }
 
@@ -21,29 +30,64 @@ export default function PaymentSuccess() {
       try {
         await confirmPayment(paymentKey, orderId, Number(amount));
         window.dispatchEvent(new Event('cart-updated'));
+
+        let orderDetail: any = null;
+        try {
+          const orderRes = await getOrder(orderId);
+          orderDetail = orderRes.data.data;
+        } catch {
+          // 조회 실패해도 완료 화면은 표시
+        }
+
+        setStatus('success');
+
         navigate('/checkout/success', {
-          state: { orderNo: orderId },
+          state: {
+            orderNo: orderId,
+            orderInfo: orderDetail ? {
+              total: orderDetail.totalAmount,
+              subtotal: orderDetail.totalAmount,
+              shipping: 0,
+              items: orderDetail.orderItems ?? orderDetail.items ?? [],
+            } : null,
+            paymentMethod: '토스페이먼츠',
+          },
           replace: true,
         });
-      } catch (e: any) {
-        setError(e.response?.data?.message || '결제 승인에 실패했습니다.');
+      } catch (e: unknown) {
+        const apiMsg = (e as { response?: { data?: { message?: string } } })?.response?.data?.message;
+        const errMsg = (e as { message?: string })?.message;
+        setErrorMsg(apiMsg ?? errMsg ?? '결제 승인에 실패했습니다. 고객센터로 문의해 주세요.');
+        setStatus('error');
       }
     };
 
     confirm();
   }, []);
 
-  if (error) {
+  if (status === 'error') {
     return (
       <div className="min-h-screen bg-[#FAFAFA] flex items-center justify-center">
-        <div className="text-center p-8">
-          <p className="text-red-500 mb-4">{error}</p>
-          <button
-            onClick={() => navigate('/cart')}
-            className="px-6 py-3 bg-black text-white rounded-xl"
-          >
-            장바구니로 돌아가기
-          </button>
+        <div className="text-center p-8 max-w-sm">
+          <div className="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-6">
+            <span className="text-2xl">✕</span>
+          </div>
+          <h2 className="text-xl font-bold mb-2">결제 승인 실패</h2>
+          <p className="text-sm text-gray-500 mb-8">{errorMsg}</p>
+          <div className="space-y-3">
+            <button
+              onClick={() => navigate('/cart')}
+              className="w-full py-3 bg-black text-white rounded-xl active:scale-[0.98] transition-transform"
+            >
+              장바구니로 돌아가기
+            </button>
+            <button
+              onClick={() => navigate('/')}
+              className="w-full py-3 border border-gray-200 rounded-xl text-sm active:scale-[0.98] transition-transform"
+            >
+              홈으로
+            </button>
+          </div>
         </div>
       </div>
     );
@@ -52,8 +96,9 @@ export default function PaymentSuccess() {
   return (
     <div className="min-h-screen bg-[#FAFAFA] flex items-center justify-center">
       <div className="text-center">
-        <div className="w-8 h-8 border-2 border-black border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-        <p className="text-gray-500 text-sm">결제 승인 처리 중...</p>
+        <div className="w-10 h-10 border-[3px] border-black border-t-transparent rounded-full animate-spin mx-auto mb-5" />
+        <p className="font-medium text-gray-800">결제 승인 처리 중</p>
+        <p className="text-sm text-gray-400 mt-1">잠시만 기다려 주세요...</p>
       </div>
     </div>
   );

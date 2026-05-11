@@ -9,10 +9,12 @@ import ResellMarket from "@/app/pages/ResellMarket";
 // 아티스트
 import ArtistLab from "@/app/pages/Artist/ArtistLab";
 import ArtistDetail from "@/app/pages/Artist/ArtistDetail";
+import ArtistWorks from "@/app/pages/Artist/ArtistWorks";
 
 // 상품
 import SmartStore from "@/app/pages/product/SmartStore";
 import ProductDetail from "@/app/pages/product/Detail";
+import ArtDetail from "@/app/pages/product/ArtDetail";
 import Product360View from "@/app/pages/product/View360";
 
 // 인증
@@ -21,9 +23,12 @@ import ForgotPassword from "@/app/pages/auth/ForgotPassword";
 import Onboarding from "@/app/pages/auth/Onboarding";
 import OAuth2Callback from "@/app/pages/auth/OAuth2Callback";
 
-// 약관
+// 약관 / 정책
 import Terms from "@/app/pages/legal/Terms";
 import Privacy from "@/app/pages/legal/Privacy";
+import Cookies from "@/app/pages/legal/Cookies";
+import Returns from "@/app/pages/support/Returns";
+import Shipping from "@/app/pages/support/Shipping";
 
 // 404
 import NotFound from "@/app/pages/NotFound";
@@ -35,6 +40,7 @@ import OrderConfirmation from "@/app/pages/order/Confirmation";
 import CheckoutSuccess from "@/app/pages/order/Success";
 
 // 결제
+import PaymentPage from "@/app/pages/payment/PaymentPage";
 import PaymentSuccess from "@/app/pages/payment/Success";
 import PaymentFail from "@/app/pages/payment/Fail";
 
@@ -59,12 +65,14 @@ export function AppRoutes() {
       <Route path="/store" element={<SmartStore />} />               {/* 상품 목록 (별칭) */}
       <Route path="/product/:id" element={<ProductDetail />} />      {/* 상품 상세 */}
       <Route path="/product/:id/360" element={<Product360View />} /> {/* 360도 뷰어 */}
+      <Route path="/art/:id" element={<ArtDetail />} />              {/* 아트 상세 */}
       <Route path="/ar-view" element={<ARView />} />                 {/* AR 뷰어 */}
       <Route path="/resell" element={<ResellMarket />} />            {/* 리셀 마켓 */}
 
       {/* ── 아티스트 ──────────────────────────────────── */}
       <Route path="/artist-lab" element={<ArtistLab />} />           {/* 아티스트 목록 */}
       <Route path="/artist/:id" element={<ArtistDetail />} />        {/* 아티스트 상세 */}
+      <Route path="/artist/:id/works" element={<ArtistWorks />} />   {/* 작가 작품 목록 */}
 
       {/* ── 인증 ──────────────────────────────────────── */}
       <Route path="/login" element={<Auth />} />                     {/* 로그인 */}
@@ -74,6 +82,9 @@ export function AppRoutes() {
       <Route path="/oauth2/callback" element={<OAuth2Callback />} /> {/* 소셜 로그인 콜백 */}
       <Route path="/terms" element={<Terms />} />                    {/* 이용약관 */}
       <Route path="/privacy" element={<Privacy />} />                {/* 개인정보처리방침 */}
+      <Route path="/cookies" element={<Cookies />} />                {/* 쿠키 정책 */}
+      <Route path="/returns" element={<Returns />} />                {/* 교환/반품 정책 */}
+      <Route path="/shipping" element={<Shipping />} />              {/* 배송 정보 */}
 
       {/* ── 장바구니 / 주문 ───────────────────────────── */}
       <Route path="/cart" element={<Cart />} />                                {/* 장바구니 */}
@@ -82,6 +93,7 @@ export function AppRoutes() {
       <Route path="/checkout/success" element={<CheckoutSuccess />} />         {/* 주문 완료 */}
 
       {/* ── 결제 ──────────────────────────────────────── */}
+      <Route path="/payment" element={<PaymentPage />} />             {/* 결제 수단 선택 */}
       <Route path="/payment/success" element={<PaymentSuccess />} />  {/* 결제 성공 */}
       <Route path="/payment/fail" element={<PaymentFail />} />        {/* 결제 실패 */}
 

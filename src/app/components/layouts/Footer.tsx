@@ -88,7 +88,6 @@ export default function Footer() {
               <ul className="space-y-3">
                 {[
                   { key: 'about', path: '/about' },
-                  { key: 'partnerships', path: '/partnerships' }
                 ].map((link) => (
                   <li key={link.key}>
                     <Link to={link.path} className="text-sm text-gray-500 hover:text-white transition-colors">
@@ -101,8 +100,15 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* 하단 정보 섹션 */}
-        <div className="pt-8 border-t border-white/10">
+        {/* 사업자 정보 */}
+        <div className="pt-8 border-t border-white/10 space-y-4">
+          <p className="text-[10px] text-gray-600 leading-relaxed break-keep">
+            상호명: (주)코알라 &nbsp;|&nbsp; 대표이사: 정동훈 &nbsp;|&nbsp; 사업자등록번호: 203-87-01972
+            &nbsp;|&nbsp; 통신판매업 신고번호: 제2024-서울서초-3956호
+            <br className="hidden sm:block" />
+            &nbsp;|&nbsp; 주소: 서울특별시 강서구 마곡중앙6로 21, 이너매스마곡 제619호 &nbsp;|&nbsp; 이메일: support@koala-art.co.kr
+          </p>
+
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             <p className="text-[10px] md:text-xs text-gray-500 order-2 md:order-1">
               {t('footer.bottom.copyright')}
@@ -123,5 +129,6 @@ export default function Footer() {
         </div>
       </div>
     </footer>
+
   );
 }
