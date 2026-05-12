@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router';
 import { ArrowLeft } from 'lucide-react';
 import Navigation from '@/app/components/layouts/Header';
+import { ShareButton } from '@/app/components/common/ShareButton';
 import { getSku } from '@/api/sku';
 import { getArtist } from '@/api/artist';
 import { ProductSkeleton, ProductNotFound } from '@/app/components/products';
@@ -68,13 +69,20 @@ export default function ArtDetail() {
       <Navigation />
 
       <main className="pt-20 pb-24 px-4 max-w-lg mx-auto w-full">
-        <button
-          onClick={() => navigate(-1)}
-          className="inline-flex items-center gap-2 text-sm text-gray-400 active:text-black transition-colors mb-6"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          뒤로가기
-        </button>
+        {/* 뒤로가기 + 공유 */}
+        <div className="flex items-center justify-between mb-6">
+          <button
+            onClick={() => navigate(-1)}
+            className="inline-flex items-center gap-2 text-sm text-gray-400 active:text-black transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            뒤로가기
+          </button>
+          <ShareButton
+            title={sku.name}
+            description={sku.description ?? undefined}
+          />
+        </div>
 
         <ArtDetailHeader
           breadcrumb="작품 소개"

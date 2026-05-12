@@ -6,7 +6,7 @@ import {
   Heart,
   MapPin,
   CreditCard,
-  Lock,
+  Settings,
   LogOut,
   User,
 } from 'lucide-react';
@@ -21,7 +21,7 @@ const menuItems = [
   { icon: Heart,      label: '위시리스트',  path: '/account/wishlist' },
   { icon: MapPin,     label: '배송지 관리', path: '/account/addresses' },
   { icon: CreditCard, label: '결제 수단',   path: '/account/payment-methods' },
-  { icon: Lock,       label: '비밀번호 변경', path: '/forgot-password' },
+  { icon: Settings,   label: '설정',        path: '/account/settings' },
 ];
 
 export default function Account() {

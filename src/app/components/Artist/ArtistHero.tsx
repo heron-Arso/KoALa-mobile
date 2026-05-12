@@ -1,7 +1,10 @@
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router';
-import { ArrowLeft, Share2 } from 'lucide-react';
+import { ArrowLeft, Bell, BellOff } from 'lucide-react';
 import { ImageWithFallback } from '@/app/components/fallback/ImageWithFallback';
 import { useTranslation } from 'react-i18next';
+import { followArtist, unfollowArtist } from '@/api/artist';
+import { ShareButton } from '@/app/components/common/ShareButton';
 
 interface ArtistHeroProps {
   artist: any;
@@ -9,7 +12,32 @@ interface ArtistHeroProps {
 
 export function ArtistHero({ artist }: ArtistHeroProps) {
   const navigate = useNavigate();
-  const { t } = useTranslation('artistLab'); // 🌟 네임스페이스 지정
+  const { t } = useTranslation('artistLab');
+
+  const [isFollowing, setIsFollowing] = useState(artist.isFollowing ?? false);
+  const [count, setCount] = useState(artist.followCount ?? 0);
+  const [loading, setLoading] = useState(false);
+
+  const handleFollow = async () => {
+    setLoading(true);
+    try {
+      if (isFollowing) {
+        await unfollowArtist(artist.artistCode);
+        setIsFollowing(false);
+        setCount((c: number) => Math.max(0, c - 1));
+      } else {
+        await followArtist(artist.artistCode);
+        setIsFollowing(true);
+        setCount((c: number) => c + 1);
+      }
+    } catch (e: any) {
+      if (e?.response?.status === 401) {
+        navigate('/login');
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <>
@@ -21,9 +49,10 @@ export function ArtistHero({ artist }: ArtistHeroProps) {
           <ArrowLeft className="w-5 h-5" />
           <span className="font-medium">{t('detail.back')}</span>
         </button>
-        <button className="p-2 text-gray-500 md:hidden">
-          <Share2 className="w-5 h-5" />
-        </button>
+        <ShareButton
+          title={`${artist.name} — KoALa 작가`}
+          description={artist.description}
+        />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 lg:gap-24 mb-20 md:mb-32">
@@ -55,8 +84,26 @@ export function ArtistHero({ artist }: ArtistHeroProps) {
             >
               {t('detail.viewWorks')}
             </Link>
-            <button className="px-10 py-4 md:py-5 border border-gray-200 rounded-full font-bold text-sm md:text-base hover:bg-gray-50 transition-all hidden sm:block">
-              {t('detail.share')}
+
+            {/* 팔로우 버튼 */}
+            <button
+              onClick={handleFollow}
+              disabled={loading}
+              className={`flex items-center justify-center gap-2 px-6 py-4 md:py-5 rounded-full font-bold text-sm md:text-base transition-all active:scale-95 disabled:opacity-50 ${
+                isFollowing
+                  ? 'bg-black text-white'
+                  : 'border border-gray-200 text-gray-700 hover:border-black hover:text-black'
+              }`}
+            >
+              {isFollowing
+                ? <BellOff className="w-4 h-4" />
+                : <Bell className="w-4 h-4" />}
+              <span>{isFollowing ? '팔로잉' : '팔로우'}</span>
+              {count > 0 && (
+                <span className={`text-xs ${isFollowing ? 'text-white/70' : 'text-gray-400'}`}>
+                  {count.toLocaleString()}
+                </span>
+              )}
             </button>
           </div>
         </div>

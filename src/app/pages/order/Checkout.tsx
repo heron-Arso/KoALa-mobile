@@ -136,8 +136,6 @@ export default function Checkout() {
   const openAddressSearch = () => {
     new (window as any).daum.Postcode({
       oncomplete: function (data: any) {
-        console.log('📍 다음 API 응답:', data);
-
         let fullAddress = data.address;
         let extraAddress = '';
 

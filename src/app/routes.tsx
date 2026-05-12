@@ -50,7 +50,11 @@ import AccountOrders from "@/app/pages/account/Orders";
 import AccountAddresses from "@/app/pages/account/Addresses";
 import AccountPaymentMethods from "@/app/pages/account/PaymentMethods";
 import AccountWishlist from "@/app/pages/account/Wishlist";
+import AccountSettings from "@/app/pages/account/Settings";
 import OrderDetail from "@/app/pages/account/OrderDetail";
+
+// 공지사항
+import Notice from "@/app/pages/Notice";
 
 export function AppRoutes() {
   return (
@@ -104,6 +108,10 @@ export function AppRoutes() {
       <Route path="/account/addresses" element={<AccountAddresses />} />            {/* 배송지 관리 */}
       <Route path="/account/payment-methods" element={<AccountPaymentMethods />} /> {/* 결제 수단 */}
       <Route path="/account/wishlist" element={<AccountWishlist />} />              {/* 위시리스트 */}
+      <Route path="/account/settings" element={<AccountSettings />} />             {/* 설정 */}
+
+      {/* ── 공지사항 ──────────────────────────────────── */}
+      <Route path="/notice" element={<Notice />} />                                {/* 공지사항 */}
 
       {/* ── 404 ───────────────────────────────────────── */}
       <Route path="*" element={<NotFound />} />                                    {/* 404 */}

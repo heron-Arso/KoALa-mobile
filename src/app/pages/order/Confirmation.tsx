@@ -44,7 +44,6 @@ export default function OrderConfirmation() {
 
     // Simulate order processing
     setTimeout(() => {
-      console.log('Order confirmed and placed');
       navigate('/checkout/success', {
         state: {
           orderInfo,
