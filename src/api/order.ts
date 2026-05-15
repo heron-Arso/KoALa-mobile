@@ -16,3 +16,11 @@ export const getOrder = (orderNo: string) =>
 // 주문 취소
 export const cancelOrder = (orderNo: string) =>
   instance.post(`/api/v1/orders/${orderNo}/cancel`);
+
+// 반품 신청
+export const createReturnRequest = (orderNo: string, reason: string) =>
+  instance.post(`/api/v1/orders/${orderNo}/returns`, { reason });
+
+// 반품 상태 조회
+export const getReturnByOrder = (orderNo: string) =>
+  instance.get(`/api/v1/orders/${orderNo}/returns`);

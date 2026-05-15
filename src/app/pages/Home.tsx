@@ -27,31 +27,37 @@ const DEFAULT_CATEGORIES = [
 export default function Home() {
   const categoryScrollRef = useRef<HTMLDivElement>(null);
   const [skus, setSkus] = useState<any[]>([]);
-  const [banner, setBanner] = useState<any>(null);
+  const [banners, setBanners] = useState<any[]>([]);
+  const [mainSubBanner, setMainSubBanner] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState(DEFAULT_CATEGORIES);
+
+  // 히어로 캐러셀 상태
+  const [currentBanner, setCurrentBanner] = useState(0);
+  const [animating, setAnimating] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // SKU 목록 조회
-        const skuRes = await getSkus(0, 6);
+        const [skuRes, bannerRes, mainSubRes, genreRes] = await Promise.all([
+          getSkus(0, 6),
+          getBanners('MAIN'),
+          getBanners('MAIN_SUB'),
+          getGenreCounts(),
+        ]);
+
         setSkus(skuRes.data.data.content ?? []);
+        setBanners(bannerRes.data.data ?? []);
 
-        // 배너 조회
-        const bannerRes = await getBanners('MAIN');
-        const banners = bannerRes.data.data ?? [];
-        if (banners.length > 0) setBanner(banners[0]);
+        const subBanners = mainSubRes.data.data ?? [];
+        setMainSubBanner(subBanners.length > 0 ? subBanners[0] : null);
 
-        // 장르별 카운트 조회
-        const genreRes = await getGenreCounts();
         const counts: Record<string, number> = genreRes.data.data ?? {};
         setCategories(DEFAULT_CATEGORIES.map((cat) => {
           if (cat.id === 'all') return { ...cat, count: counts['ALL'] ?? 0 };
           const genreKey = Object.entries(GENRE_TO_CATEGORY).find(([, id]) => id === cat.id)?.[0];
           return { ...cat, count: genreKey ? (counts[genreKey] ?? 0) : 0 };
         }));
-
       } catch (e) {
         console.error('홈 데이터 로딩 실패:', e);
       } finally {
@@ -60,6 +66,24 @@ export default function Home() {
     };
     fetchData();
   }, []);
+
+  // 자동 슬라이드 (5초)
+  useEffect(() => {
+    if (banners.length <= 1) return;
+    const id = setInterval(() => {
+      setCurrentBanner((prev) => (prev + 1) % banners.length);
+    }, 5000);
+    return () => clearInterval(id);
+  }, [banners.length]);
+
+  const goToIndex = (index: number) => {
+    if (index === currentBanner || animating) return;
+    setAnimating(true);
+    setCurrentBanner(index);
+    setTimeout(() => setAnimating(false), 700);
+  };
+
+  const currentBannerData = banners[currentBanner] ?? null;
 
   const scrollCategories = (direction: 'left' | 'right') => {
     if (categoryScrollRef.current) {
@@ -70,43 +94,73 @@ export default function Home() {
     }
   };
 
+  // MAIN_SUB 배너 데이터
+  const introTitle = mainSubBanner?.title || '글로벌 K-아트의 새로운 기준을 만듭니다.';
+  const introDescription = mainSubBanner?.subtitle || '아티스트와 컬렉터, 디지털과 피지컬을 잇는 가장 매끄러운 아트 에코시스템. 당신의 일상에 스며드는 예술의 힘을 KoALa와 함께 경험하세요.';
+  const introImageUrl = mainSubBanner?.imageUrl ?? null;
+  const introPrimaryLink = mainSubBanner?.linkUrl || '/artist-lab';
+
   return (
     <div className="bg-white">
 
-      {/* Hero Section */}
-      <section className="relative h-[80vh] min-h-[600px] md:h-[85vh] overflow-hidden">
-        <div className="absolute inset-0">
-          <img
-            src={banner?.imageUrl ?? 'https://i.ytimg.com/vi/fNfC7KZ10og/hq720.jpg'}
-            alt={banner?.title ?? 'Korean Art Gallery'}
-            className="w-full h-full object-cover object-top md:object-center"
-          />
-        </div>
-        <div className="absolute inset-0 bg-gradient-to-b md:bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
-        <div className="relative h-full flex items-center px-6 md:px-12">
-          <div className="max-w-[1800px] mx-auto w-full">
-            <div className="max-w-2xl text-white">
-              <div className="inline-block px-3 py-1 bg-white/10 backdrop-blur-md text-[10px] md:text-xs tracking-widest uppercase rounded-full mb-6 border border-white/20">
-                신제품 드랍!
-              </div>
-              <h1 className="text-4xl sm:text-5xl md:text-7xl mb-6 font-bold tracking-tighter leading-[1.1]">
-                {banner?.title ?? '예술작품이'}<br />
-                {banner?.subtitle ?? '지금 당신의 손에'}
-              </h1>
-              <p className="text-base md:text-xl text-gray-200 mb-8 max-w-lg break-keep opacity-90">
-                한국의 아름다운 예술작품들을 디지털과 물리적 형태로 만나보세요.
-                전통과 현대가 어우러진 독특한 컬렉션을 선사합니다.
-              </p>
-              <Link
-                to={banner?.linkUrl ?? '/store'}
-                className="inline-flex items-center gap-3 px-8 py-4 bg-white text-black rounded-full hover:bg-gray-100 transition-all font-bold group"
-              >
-                쇼핑하기
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Link>
+      {/* Hero Section — 페이드 캐러셀 */}
+      <section className="relative h-[80vh] min-h-[600px] overflow-hidden bg-black">
+        {/* 배너 이미지 레이어 */}
+        {banners.map((b, i) => (
+          <div
+            key={b.id}
+            className="absolute inset-0 transition-opacity duration-700 ease-in-out"
+            style={{ opacity: i === currentBanner ? 1 : 0 }}
+          >
+            <img
+              src={b.imageUrl}
+              alt={b.title ?? 'Banner'}
+              className="w-full h-full object-cover object-top"
+            />
+          </div>
+        ))}
+
+        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-transparent" />
+        <div
+          className="relative h-full flex items-center px-6 transition-opacity duration-500"
+          style={{ opacity: animating ? 0.6 : 1 }}
+        >
+          <div className="max-w-2xl text-white">
+            <div className="inline-block px-3 py-1 bg-white/10 backdrop-blur-md text-[10px] tracking-widest uppercase rounded-full mb-6 border border-white/20">
+              신제품 드랍!
             </div>
+            <h1 className="text-4xl sm:text-5xl mb-6 font-bold tracking-tighter leading-[1.1]">
+              {currentBannerData?.title ?? '예술작품이'}<br />
+              {currentBannerData?.subtitle ?? '지금 당신의 손에'}
+            </h1>
+            <p className="text-base text-gray-200 mb-8 max-w-lg break-keep opacity-90">
+              한국의 아름다운 예술작품들을 디지털과 물리적 형태로 만나보세요.
+            </p>
+            <Link
+              to={currentBannerData?.linkUrl ?? '/store'}
+              className="inline-flex items-center gap-3 px-8 py-4 bg-white text-black rounded-full font-bold group"
+            >
+              쇼핑하기
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </Link>
           </div>
         </div>
+
+        {/* 도트 인디케이터 */}
+        {banners.length > 1 && (
+          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
+            {banners.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => goToIndex(i)}
+                className={`rounded-full transition-all duration-300 ${
+                  i === currentBanner ? 'w-6 h-2 bg-white' : 'w-2 h-2 bg-white/50'
+                }`}
+                aria-label={`배너 ${i + 1}`}
+              />
+            ))}
+          </div>
+        )}
       </section>
 
       {/* Categories */}
@@ -152,7 +206,6 @@ export default function Home() {
             </Link>
           </div>
 
-          {/* 로딩 상태 */}
           {loading ? (
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8">
               {[...Array(6)].map((_, i) => (
@@ -164,7 +217,6 @@ export default function Home() {
               ))}
             </div>
           ) : skus.length === 0 ? (
-            // 데이터 없을 때 (더미 데이터 없애고 빈 상태 표시)
             <div className="text-center py-20">
               <p className="text-gray-400 text-lg">아직 등록된 상품이 없습니다.</p>
               <p className="text-gray-300 text-sm mt-2">어드민에서 상품을 등록해주세요.</p>
@@ -179,7 +231,7 @@ export default function Home() {
                 >
                   <div className="relative flex-1 rounded-3xl overflow-hidden bg-gray-100 mb-4">
                     <img
-                      src={sku.primaryImageUrl ?? 'https://via.placeholder.com/400'}
+                      src={sku.primaryImageUrl ?? ''}
                       alt={sku.name}
                       className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
                     />
@@ -217,24 +269,31 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 플랫폼 소개 섹션 */}
+      {/* 플랫폼 소개 섹션 — MAIN_SUB 배너 연동 */}
       <section className="py-24 px-6 md:px-12 bg-gray-50 border-y border-gray-100">
         <div className="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div className="order-2 lg:order-1">
             <div className="text-[10px] md:text-xs text-indigo-500 font-black tracking-[0.2em] mb-4 uppercase">KoALa Platform</div>
-            <h2 className="text-3xl md:text-5xl font-bold mb-6 tracking-tighter break-keep">글로벌 K-아트의 새로운 기준을 만듭니다.</h2>
-            <p className="text-base md:text-lg text-gray-500 leading-relaxed mb-10 break-keep">
-              아티스트와 컬렉터, 디지털과 피지컬을 잇는 가장 매끄러운 아트 에코시스템.
-              당신의 일상에 스며드는 예술의 힘을 KoALa와 함께 경험하세요.
-            </p>
+            <h2 className="text-3xl md:text-5xl font-bold mb-6 tracking-tighter break-keep">{introTitle}</h2>
+            <p className="text-base md:text-lg text-gray-500 leading-relaxed mb-10 break-keep">{introDescription}</p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Link to="/artist-lab" className="px-8 py-4 bg-black text-white rounded-full font-bold hover:bg-gray-800 transition-all text-center">작가 탐색하기</Link>
-              <Link to="/ar-view" className="px-8 py-4 border-2 border-black rounded-full font-bold hover:bg-black hover:text-white transition-all text-center">AR 뷰어 체험하기</Link>
+              <Link to={introPrimaryLink} className="px-8 py-4 bg-black text-white rounded-full font-bold hover:bg-gray-800 transition-all text-center">
+                작가 탐색하기
+              </Link>
+              {/* AR 뷰어 준비 중
+              <Link to="/ar-view" className="px-8 py-4 border-2 border-black rounded-full font-bold hover:bg-black hover:text-white transition-all text-center">
+                AR 뷰어 체험하기
+              </Link>
+              */}
             </div>
           </div>
           <div className="order-1 lg:order-2">
-            <div className="aspect-[4/5] rounded-[3rem] overflow-hidden shadow-2xl rotate-2 hover:rotate-0 transition-transform duration-700">
-              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQ0hzEOYPkyRA1dh4RzFqNE3Zs80bd6jZMDA&s" alt="Platform Vision" className="w-full h-full object-cover" />
+            <div className="aspect-[4/5] rounded-[3rem] overflow-hidden shadow-2xl rotate-2 hover:rotate-0 transition-transform duration-700 bg-gray-200">
+              {introImageUrl ? (
+                <img src={introImageUrl} alt={introTitle} className="w-full h-full object-cover" />
+              ) : (
+                <div className="w-full h-full bg-gray-200" />
+              )}
             </div>
           </div>
         </div>

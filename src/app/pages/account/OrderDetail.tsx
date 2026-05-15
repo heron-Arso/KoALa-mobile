@@ -168,8 +168,16 @@ export default function OrderDetail() {
               <div className="space-y-4">
                 {(order.items ?? []).map((item: any, idx: number) => (
                   <div key={idx} className="flex gap-3 items-center">
-                    <div className="w-16 h-16 rounded-xl bg-gray-100 flex-shrink-0 border border-gray-50 flex items-center justify-center">
-                      <Package className="w-7 h-7 text-gray-300" />
+                    <div className="w-16 h-16 rounded-xl bg-gray-100 flex-shrink-0 border border-gray-50 overflow-hidden flex items-center justify-center">
+                      {item.primaryImageUrl ? (
+                        <img
+                          src={item.primaryImageUrl}
+                          alt={item.skuName}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <Package className="w-7 h-7 text-gray-300" />
+                      )}
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-bold text-gray-900 line-clamp-2">
