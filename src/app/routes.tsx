@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router";
 
 // 루트 페이지
 import Home from "@/app/pages/Home";
+import Gallery from "@/app/pages/gallery/Gallery";
 import Search from "@/app/pages/Search";
 import ARView from "@/app/pages/ARView";
 import ResellMarket from "@/app/pages/ResellMarket";
@@ -62,6 +63,7 @@ export function AppRoutes() {
 
       {/* ── 메인 ──────────────────────────────────────── */}
       <Route path="/" element={<Home />} />                          {/* 홈 */}
+      <Route path="/gallery" element={<Gallery />} />               {/* 작품 갤러리 */}
       <Route path="/search" element={<Search />} />                  {/* 검색 */}
 
       {/* ── 스토어 ────────────────────────────────────── */}

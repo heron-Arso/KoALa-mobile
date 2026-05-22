@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "474765855548",
+    "project_id": "koala-af35f",
+    "storage_bucket": "koala-af35f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:474765855548:android:67bc319c4c70447348ac39",
+        "android_client_info": {
+          "package_name": "com.koala.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtyBkYYIUuQVjelehNEdS4xVIga7fl8OA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

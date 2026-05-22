@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import { useRef, useEffect, useState } from 'react';
 import { getSkus, getGenreCounts } from '@/api/sku';
 import { getBanners } from '@/api/banner';
+import TrendingArtists from '@/app/components/Artist/TrendingArtists';
 
 // 백엔드 genre 값 → 카테고리 ID 매핑
 const GENRE_TO_CATEGORY: Record<string, string> = {
@@ -268,6 +269,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Trending Artists */}
+      <TrendingArtists />
 
       {/* 플랫폼 소개 섹션 — MAIN_SUB 배너 연동 */}
       <section className="py-24 px-6 md:px-12 bg-gray-50 border-y border-gray-100">

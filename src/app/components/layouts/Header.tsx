@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import {
   ShoppingCart, User, Menu, X, Search,
   ChevronRight, LogOut, Settings, Bell, Headset
@@ -10,14 +10,22 @@ import { CART_QUERY_KEY } from '@/app/hooks/useCart';
 import { getCart } from '@/api/cart';
 import type { Cart } from '@/api/types';
 import { useTranslation } from 'react-i18next';
+import { useAuth } from '@/app/context/AuthContext';
+import { logout as logoutApi } from '@/api/auth';
 
 export function Header() {
   const { t } = useTranslation();
   const location = useLocation();
+  const navigate = useNavigate();
+  const { setAuthenticated, isAuthenticated } = useAuth();
   const [isHeroActive, setIsHeroActive] = useState(false);
   const [isHeroDark, setIsHeroDark] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isPop, setIsPop] = useState(false);
+
+  useEffect(() => {
+    document.body.classList.toggle('menu-open', isMenuOpen);
+  }, [isMenuOpen]);
 
   // 1. 장바구니 수량 — react-query 캐시에서 읽기
   const { data: cart } = useQuery<Cart | null>({
@@ -81,7 +89,7 @@ export function Header() {
   const iconClass = isTransparent && isHeroDark ? 'text-white/80 hover:text-white' : 'text-gray-400 hover:text-black';
 
   const menus = [
-    { key: 'gallery', path: '/' },
+    { key: 'gallery', path: '/gallery' },
     { key: 'lab', path: '/artist-lab' },
     { key: 'store', path: '/store' },
     { key: 'about', path: '/about'}
@@ -96,7 +104,7 @@ export function Header() {
   return (
     <>
       {/* 상단 네비게이션 바 */}
-      <nav className={`fixed top-0 left-0 right-0 transition-all duration-300 ${isMenuOpen ? 'z-[110] bg-white' : 'z-50 ' + navBgClass}`}>
+      <nav className={`fixed top-0 left-0 right-0 transition-all duration-300 ${isMenuOpen ? 'z-[400] bg-white' : 'z-50 ' + navBgClass}`}>
         <div className="max-w-[1600px] mx-auto px-6 md:px-12 py-4">
           <div className="flex items-center justify-between">
             {/* 로고 */}
@@ -160,9 +168,8 @@ export function Header() {
       </nav>
 
       {/* [MOBILE] 사이드바(드로어) 메뉴 */}
-      <div className={`fixed top-0 left-0 w-full h-[100dvh] z-[100] bg-white lg:hidden transition-all duration-400 ease-in-out ${isMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'}`}>
-        <div className="h-full w-full flex flex-col pt-28 pb-10 px-8">
-
+      <div className={`fixed top-0 left-0 w-full h-[100dvh] z-[300] bg-white lg:hidden overflow-y-auto transition-all duration-400 ease-in-out ${isMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'}`}>
+        <div className="flex flex-col px-8 pt-28 pb-[max(48px,env(safe-area-inset-bottom))]">
           <div className="flex flex-col gap-6 mb-10">
             {menus.map((menu, index) => (
               <Link
@@ -177,7 +184,7 @@ export function Header() {
             ))}
           </div>
 
-          <div className={`flex-1 overflow-y-auto border-t pt-8 space-y-1 transition-all duration-700 delay-150 ${isMenuOpen ? 'opacity-100' : 'opacity-0'}`}>
+          <div className={`border-t border-gray-100 pt-6 space-y-1 transition-all duration-700 delay-150 ${isMenuOpen ? 'opacity-100' : 'opacity-0'}`}>
             {subMenus.map((item) => (
               <Link
                 key={item.key}
@@ -193,18 +200,28 @@ export function Header() {
               </Link>
             ))}
 
-            <button
-              className="w-full flex items-center justify-between py-4 px-2 -mx-2 active:bg-red-50 rounded-lg transition-colors group"
-              onClick={() => { setIsMenuOpen(false); }}
-            >
-              <div className="flex items-center gap-4">
-                <LogOut className="w-5 h-5 text-red-400" />
-                <span className="text-lg font-medium text-red-500">{t('header.logout')}</span>
-              </div>
-            </button>
+            {isAuthenticated && (
+              <button
+                className="w-full flex items-center justify-between py-4 px-2 -mx-2 active:bg-red-50 rounded-lg transition-colors group"
+                onClick={async () => {
+                  setIsMenuOpen(false);
+                  try { await logoutApi(); } catch { /* ignore */ }
+                  finally {
+                    setAuthenticated(false);
+                    window.dispatchEvent(new Event('cart-updated'));
+                    navigate('/login');
+                  }
+                }}
+              >
+                <div className="flex items-center gap-4">
+                  <LogOut className="w-5 h-5 text-red-400" />
+                  <span className="text-lg font-medium text-red-500">{t('header.logout')}</span>
+                </div>
+              </button>
+            )}
           </div>
 
-          <div className="flex-shrink-0 mt-auto pt-6">
+          <div className="mt-8">
             <div className="flex items-center gap-3">
               <Link
                 to="/account/orders"

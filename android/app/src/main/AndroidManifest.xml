@@ -24,6 +24,26 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
+            <!-- 커스텀 URL 스킴 딥링크: com.koala.app://경로 → 앱 열기 -->
+            <!-- 용도: 푸시알림 탭 시 특정 화면 이동, 외부 공유 링크 -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="com.koala.app" />
+            </intent-filter>
+
+            <!-- Android App Links: https://koala-art.co.kr/ → 앱 열기 (검증된 도메인) -->
+            <!-- 조건: 서버에 /.well-known/assetlinks.json 파일이 있어야 작동 -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="https"
+                    android:host="koala-art.co.kr" />
+            </intent-filter>
+
         </activity>
 
         <provider
@@ -40,4 +60,9 @@
     <!-- Permissions -->
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+    <uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
 </manifest>
