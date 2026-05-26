@@ -9,7 +9,7 @@ import { ArtistGallery } from '@/app/components/Artist';
 
 export default function ArtistDetail() {
   const { id } = useParams();
-  const { loading, artist, videos, images } = useArtistDetail(id);
+  const { loading, artist, videos, images, isFollowing } = useArtistDetail(id);
 
   if (loading) return <ArtistDetailSkeleton />;
   if (!artist) return <ArtistNotFound />;
@@ -21,7 +21,7 @@ export default function ArtistDetail() {
       <main className="pt-24 md:pt-32 pb-24 px-5 md:px-8">
         <div className="max-w-[1600px] mx-auto">
 
-          <ArtistHero artist={artist} />
+          <ArtistHero artist={artist} isFollowing={isFollowing} />
 
           <ArtistVideos videos={videos} />
 

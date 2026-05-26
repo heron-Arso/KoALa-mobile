@@ -14,3 +14,7 @@ export const followArtist = (artistCode: string) =>
 
 export const unfollowArtist = (artistCode: string) =>
   instance.delete(`/api/v1/artists/${artistCode}/follow`);
+
+// 팔로우 상태 조회 (인증 엔드포인트 — 토큰 만료 시 401 → 자동 갱신)
+export const getArtistFollowStatus = (artistCode: string) =>
+  instance.get<{ data: boolean }>(`/api/v1/artists/${artistCode}/following`);

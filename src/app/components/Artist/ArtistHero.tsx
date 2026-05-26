@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { ArrowLeft, Bell, BellOff } from 'lucide-react';
 import { ImageWithFallback } from '@/app/components/fallback/ImageWithFallback';
@@ -8,15 +8,21 @@ import { ShareButton } from '@/app/components/common/ShareButton';
 
 interface ArtistHeroProps {
   artist: any;
+  isFollowing: boolean;
 }
 
-export function ArtistHero({ artist }: ArtistHeroProps) {
+export function ArtistHero({ artist, isFollowing: initialFollowing }: ArtistHeroProps) {
   const navigate = useNavigate();
   const { t } = useTranslation('artistLab');
 
-  const [isFollowing, setIsFollowing] = useState(artist.isFollowing ?? false);
+  const [isFollowing, setIsFollowing] = useState(initialFollowing);
   const [count, setCount] = useState(artist.followCount ?? 0);
   const [loading, setLoading] = useState(false);
+
+  // 새로고침 후 서버에서 받은 최신값 반영
+  useEffect(() => {
+    setIsFollowing(initialFollowing);
+  }, [initialFollowing]);
 
   const handleFollow = async () => {
     setLoading(true);
@@ -58,7 +64,7 @@ export function ArtistHero({ artist }: ArtistHeroProps) {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 lg:gap-24 mb-20 md:mb-32">
         <div className="relative overflow-hidden rounded-[2rem] md:rounded-[3rem] bg-gray-50 aspect-[3/4] shadow-xl">
           <ImageWithFallback
-            src={artist.profileImageUrl ?? 'https://via.placeholder.com/400'}
+            src={artist.profileImageUrl ?? ''}
             alt={artist.name}
             className="w-full h-full object-cover transition-transform duration-1000 hover:scale-105"
           />
