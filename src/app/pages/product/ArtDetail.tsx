@@ -9,10 +9,23 @@ import { ProductSkeleton, ProductNotFound } from '@/app/components/products';
 import {
   ArtDetailHeader,
   ArtImages,
+  ArtMaterial,
+  ArtPackaging,
   ArtArtist,
   ArtInfo,
   ArtQnA,
 } from '@/app/components/ArtDetail';
+
+const GENRE_LABELS: Record<string, string> = {
+  ART_TOY:      '아트 토이',
+  SCULPTURE:    '조각',
+  PAINTING:     '페인팅',
+  PRINT:        '판화 / 프린트',
+  PHOTOGRAPH:   '사진',
+  INSTALLATION: '설치 미술',
+  TEXTILE:      '섬유 / 직물',
+  OTHER:        '기타',
+};
 
 export default function ArtDetail() {
   const { id } = useParams();
@@ -50,17 +63,26 @@ export default function ArtDetail() {
   if (loading) return <ProductSkeleton />;
   if (!sku) return <ProductNotFound />;
 
-  const images =
-    sku.mediaList && sku.mediaList.length > 0
-      ? sku.mediaList.filter((m: any) => m.mediaType === 'IMAGE').map((m: any) => m.fileUrl)
-      : sku.primaryImageUrl
-      ? [sku.primaryImageUrl]
-      : [];
+  // 작품 상세 이미지(DETAIL)
+  const detailImgs = sku.mediaList
+    ?.filter((m: any) => m.mediaRole === 'DETAIL')
+    .map((m: any) => m.fileUrl) ?? [];
+
+  // 재질 이미지(MATERIAL)
+  const materialImgs = sku.mediaList
+    ?.filter((m: any) => m.mediaRole === 'MATERIAL')
+    .map((m: any) => m.fileUrl) ?? [];
+
+  // 포장 이미지(PACKAGING)
+  const packagingImgs = sku.mediaList
+    ?.filter((m: any) => m.mediaRole === 'PACKAGING')
+    .map((m: any) => m.fileUrl) ?? [];
 
   const artInfoItems = [
-    { label: '소재', value: sku.genre ?? '-' },
-    { label: '크기', value: sku.widthCm ? `${sku.widthCm}cm × ${sku.heightCm}cm` : '-' },
-    { label: '무게', value: sku.weightKg ? `${sku.weightKg}kg` : '-' },
+    { label: '아트 종류', value: GENRE_LABELS[sku.genre as string] ?? sku.genre ?? '-' },
+    { label: '소재',     value: sku.material || '-' },
+    { label: '크기',     value: sku.widthCm ? `${sku.widthCm}cm × ${sku.heightCm}cm` : '-' },
+    { label: '무게',     value: sku.weightKg ? `${sku.weightKg}kg` : '-' },
     { label: '배달비용', value: '-' },
   ];
 
@@ -84,14 +106,32 @@ export default function ArtDetail() {
           />
         </div>
 
+        {/* 1. 작품 헤더 */}
         <ArtDetailHeader
           breadcrumb="작품 소개"
           worldViewTitle={sku.name}
           worldViewDesc={sku.description ?? ''}
         />
 
-        <ArtImages images={images} title={sku.name} />
+        {/* 2. 작품 상세 이미지 */}
+        <ArtImages images={detailImgs} title={sku.name} />
 
+        {/* 3. 재질 / 소재 사진 + 설명 */}
+        <ArtMaterial
+          images={materialImgs}
+          description={sku.materialDescription}
+          title={sku.name}
+        />
+
+        {/* 4. 포장 사진 */}
+        <ArtPackaging
+          images={packagingImgs}
+          packagingTitle={sku.packagingTitle}
+          packagingDescription={sku.packagingDescription}
+          title={sku.name}
+        />
+
+        {/* 5. 아티스트 */}
         <ArtArtist
           artistCode={sku.artistCode}
           artistName={sku.artistName}
@@ -99,8 +139,10 @@ export default function ArtDetail() {
           artistImageUrl={artist?.profileImageUrl}
         />
 
+        {/* 6. 작품 스펙 테이블 */}
         <ArtInfo items={artInfoItems} />
 
+        {/* 7. Q&A */}
         <ArtQnA />
       </main>
     </div>

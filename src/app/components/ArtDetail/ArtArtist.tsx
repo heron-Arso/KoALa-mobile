@@ -32,7 +32,7 @@ export function ArtArtist({
 
   return (
     <section className="mb-12">
-      <p className="text-xs text-gray-400 tracking-widest uppercase mb-6">작가 - ARTIST</p>
+      <h2 className="text-xl font-bold text-gray-400 mb-6">작가 - ARTIST</h2>
       {artistCode ? (
         <Link to={`/artist/${artistCode}`} className="block active:opacity-70 transition-opacity">
           {inner}
