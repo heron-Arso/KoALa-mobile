@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router';
  *
  * 지원하는 링크 형식:
  * - 유니버설 링크: https://koala-art.co.kr/artist/abc123
- * - 커스텀 스킴:   koala://artist/abc123
+ * - 커스텀 스킴:   com.koala.app://artist/abc123 (AndroidManifest 에 등록된 스킴)
  *
  * Android manifest에 intent-filter 설정 필요 (android/app/src/main/AndroidManifest.xml)
  */
@@ -26,10 +26,9 @@ export function useDeepLink() {
           // 유니버설 링크: https://koala-art.co.kr/...
           const url = new URL(data.url);
           pathname = url.pathname + url.search;
-        } else if (data.url.startsWith('koala://')) {
-          // 커스텀 스킴: koala://artist/abc123
-          const path = data.url.replace('koala://', '/');
-          pathname = path;
+        } else if (data.url.startsWith('com.koala.app://') || data.url.startsWith('koala://')) {
+          // 커스텀 스킴: com.koala.app://artist/abc123 → /artist/abc123
+          pathname = data.url.replace(/^(com\.koala\.app|koala):\/\/\/?/, '/');
         }
 
         if (pathname && pathname !== '/') {

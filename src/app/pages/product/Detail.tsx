@@ -156,12 +156,12 @@ export default function ProductDetail() {
 
   const artInfoItems = useMemo(
     () => [
-      { label: '소재', value: sku?.genre ?? '-' },
+      { label: '소재', value: sku?.material ?? '-' },
       { label: '크기', value: sku?.widthCm ? `${sku.widthCm}cm × ${sku.heightCm}cm` : '-' },
       { label: '무게', value: sku?.weightKg ? `${sku.weightKg}kg` : '-' },
       { label: '배달비용', value: '-' },
     ],
-    [sku?.genre, sku?.widthCm, sku?.heightCm, sku?.weightKg],
+    [sku?.material, sku?.widthCm, sku?.heightCm, sku?.weightKg],
   );
 
   if (loading) return <ProductSkeleton />;

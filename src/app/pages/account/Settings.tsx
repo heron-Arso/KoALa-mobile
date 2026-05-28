@@ -1,11 +1,13 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { ArrowLeft, KeyRound, LogOut, Trash2, ChevronRight } from 'lucide-react';
-import { logout } from '@/api/auth';
+import { logout, withdraw } from '@/api/auth';
 import { useDialog } from '@/mobile/hooks/useDialog';
 
 export default function Settings() {
   const navigate = useNavigate();
-  const { confirm } = useDialog();
+  const { confirm, alert } = useDialog();
+  const [withdrawing, setWithdrawing] = useState(false);
 
   const handleLogout = async () => {
     const ok = await confirm('로그아웃 하시겠습니까?');
@@ -16,6 +18,24 @@ export default function Settings() {
       // 서버 오류여도 로컬 세션 정리
     }
     navigate('/login');
+  };
+
+  const handleWithdraw = async () => {
+    if (withdrawing) return;
+    const ok = await confirm(
+      '정말 탈퇴하시겠습니까?\n계정과 모든 데이터가 삭제되며 복구할 수 없습니다.',
+      '회원 탈퇴',
+    );
+    if (!ok) return;
+    setWithdrawing(true);
+    try {
+      await withdraw();
+      await alert('회원 탈퇴가 완료되었습니다.');
+      navigate('/login');
+    } catch {
+      await alert('탈퇴 처리 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+      setWithdrawing(false);
+    }
   };
 
   return (
@@ -74,16 +94,20 @@ export default function Settings() {
             <p className="text-xs font-semibold text-red-400 tracking-wide uppercase">위험 구역</p>
           </div>
           <button
-            disabled
-            className="w-full flex items-center justify-between px-5 py-4 opacity-40 cursor-not-allowed"
+            onClick={handleWithdraw}
+            disabled={withdrawing}
+            className="w-full flex items-center justify-between px-5 py-4 hover:bg-red-50/50 transition-colors active:bg-red-50 disabled:opacity-40 disabled:cursor-not-allowed"
           >
             <div className="flex items-center gap-3">
               <Trash2 className="w-4 h-4 text-red-400" />
               <div className="text-left">
                 <p className="text-sm font-medium text-gray-800">회원 탈퇴</p>
-                <p className="text-xs text-gray-400 mt-0.5">계정과 모든 데이터가 삭제됩니다 (준비 중)</p>
+                <p className="text-xs text-gray-400 mt-0.5">
+                  {withdrawing ? '처리 중...' : '계정과 모든 데이터가 삭제됩니다'}
+                </p>
               </div>
             </div>
+            <ChevronRight className="w-4 h-4 text-gray-300" />
           </button>
         </div>
       </div>

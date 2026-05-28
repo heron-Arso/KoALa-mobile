@@ -13,6 +13,10 @@ export const login = (data: LoginRequest) =>
 export const logout = () =>
   instance.post('/api/v1/auth/logout');
 
+// 회원 탈퇴 (계정 soft delete + 토큰 폐기)
+export const withdraw = () =>
+  instance.delete('/api/v1/users/me');
+
 // 토큰 재발급 (refreshToken은 HttpOnly 쿠키로 자동 전송)
 export const refresh = () =>
   instance.post('/api/v1/auth/refresh', null, { withCredentials: true });
