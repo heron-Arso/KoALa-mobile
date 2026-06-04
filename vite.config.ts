@@ -20,4 +20,16 @@ export default defineConfig({
 
   // File types to support raw imports. Never add .css, .tsx, or .ts files to this.
   assetsInclude: ['**/*.svg', '**/*.csv'],
+
+  // [DEV 전용] 로컬 프리뷰에서 CORS 우회용 프록시.
+  // .env.local 에서 VITE_API_BASE_URL='' 로 두면 /api 요청이 아래 target 으로 전달됨.
+  server: {
+    proxy: {
+      '/api': {
+        target: 'https://koala-art.co.kr',
+        changeOrigin: true,
+        secure: true,
+      },
+    },
+  },
 })

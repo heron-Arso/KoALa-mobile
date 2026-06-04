@@ -16,12 +16,15 @@ const HIDDEN_ROUTES = [
 ];
 
 const tabs = [
-    { path: '/',                icon: Home,          label: '홈' },
-    { path: '/smart-store',     icon: Search,         label: '탐색' },
-    { path: '/cart',            icon: ShoppingCart,   label: '장바구니' },
-    { path: '/account/wishlist',icon: Heart,          label: '위시리스트' },
-    { path: '/account',         icon: User,           label: '계정' },
+    { path: '/smart-store',      icon: Search,        label: '탐색' },
+    { path: '/account/wishlist', icon: Heart,         label: '위시리스트' },
+    { path: '/',                 icon: Home,          label: '홈' },      // 중앙(원형)
+    { path: '/cart',             icon: ShoppingCart,  label: '장바구니' },
+    { path: '/account',          icon: User,          label: '계정' },
 ];
+
+// 가운데에 원형으로 띄울 탭의 인덱스
+const CENTER_INDEX = 2;
 
 function isTabActive(tabPath: string, currentPath: string): boolean {
     if (tabPath === '/') return currentPath === '/';
@@ -68,8 +71,30 @@ export default function BottomNav() {
             style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
         >
             <div className="flex items-center justify-around h-16">
-                {tabs.map(({ path: tabPath, icon: Icon, label }) => {
+                {tabs.map(({ path: tabPath, icon: Icon, label }, idx) => {
                     const active = isTabActive(tabPath, path);
+
+                    // ── 중앙 홈: 원형으로 띄우는(floating) 버튼 ──
+                    if (idx === CENTER_INDEX) {
+                        return (
+                            <button
+                                key={tabPath}
+                                onClick={() => navigate(tabPath)}
+                                className="flex flex-col items-center flex-1"
+                            >
+                                <div
+                                    className={`-mt-8 mb-1 flex items-center justify-center w-14 h-14 rounded-full ring-4 ring-white shadow-lg transition-colors ${active ? 'bg-black' : 'bg-gray-800'}`}
+                                >
+                                    <Icon className="w-6 h-6 text-white" strokeWidth={2.2} />
+                                </div>
+                                <span className={`text-[10px] transition-colors ${active ? 'text-black font-semibold' : 'text-gray-500'}`}>
+                                    {label}
+                                </span>
+                            </button>
+                        );
+                    }
+
+                    // ── 일반 탭 ──
                     return (
                         <button
                             key={tabPath}

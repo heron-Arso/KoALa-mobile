@@ -121,7 +121,9 @@ export default function Home() {
           </div>
         ))}
 
-        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-transparent" />
+        {/* 가독성 스크림 — 텍스트(왼쪽)와 하단을 어둡게 깔아 어떤 배너 이미지든 글자가 또렷하게 */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/45 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/25" />
         <div
           className="relative h-full flex items-center px-6 transition-opacity duration-500"
           style={{ opacity: animating ? 0.6 : 1 }}
