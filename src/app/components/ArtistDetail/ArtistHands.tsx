@@ -6,7 +6,7 @@ interface ArtistHandsProps {
   images?: string[];
 }
 
-const PLACEHOLDER = 'https://via.placeholder.com/300x200';
+const PLACEHOLDER = '/placeholder.svg';
 
 export function ArtistHands({
   title = '작가의 손',

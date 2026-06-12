@@ -15,9 +15,9 @@ import { useAuth } from '@/app/context/AuthContext';
  * 3. 로그인 성공(isAuthenticated=true) 시점에 보관된 토큰을 재전송
  *    → "켤 때 비로그인이라 저장 실패 → 로그인 후 미전송" 문제 해결
  *
- * [사전 준비 - TODO]
- * - Firebase 프로젝트 생성 후 android/app/google-services.json 배치
- * - android/build.gradle 에 Google Services 플러그인 추가
+ * [사전 준비 - 완료]
+ * - Firebase 프로젝트 생성 및 android/app/google-services.json 배치 완료
+ * - android/build.gradle 에 Google Services 플러그인 추가 완료
  *
  * [알림 클릭 시 이동 경로] 알림 payload의 data.path 값으로 이동
  */

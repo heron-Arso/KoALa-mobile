@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useParams, useNavigate } from 'react-router';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Rotate3d, Box } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useQueryClient } from '@tanstack/react-query';
 import Navigation from '@/app/components/layouts/Header';
@@ -127,7 +127,7 @@ export default function ProductDetail() {
     if (!sku) return [];
     return sku.mediaList && sku.mediaList.length > 0
       ? sku.mediaList.map((m) => m.fileUrl)
-      : [sku.primaryImageUrl ?? 'https://via.placeholder.com/400'];
+      : [sku.primaryImageUrl ?? '/placeholder.svg'];
   }, [sku]);
 
   const detailImgs = useMemo(
@@ -213,6 +213,22 @@ export default function ProductDetail() {
                 onAddToCart={handleAddToCart}
                 onWishlist={handleWishlist}
               />
+
+              {/* AR / 360 뷰어 진입 */}
+              <div className="flex gap-3 mt-4">
+                <button
+                  onClick={() => navigate(`/product/${sku.skuCode}/360`)}
+                  className="flex-1 flex items-center justify-center gap-2 py-3 border border-gray-200 rounded-full text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+                >
+                  <Rotate3d className="w-4 h-4" /> 360° 보기
+                </button>
+                <button
+                  onClick={() => navigate(`/ar-view?skuCode=${sku.skuCode}`)}
+                  className="flex-1 flex items-center justify-center gap-2 py-3 border border-gray-200 rounded-full text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+                >
+                  <Box className="w-4 h-4" /> AR로 보기
+                </button>
+              </div>
             </div>
           </div>
 

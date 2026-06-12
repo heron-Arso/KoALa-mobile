@@ -15,7 +15,7 @@ export default function CartItem({ item, onUpdateQuantity, onRemove }: CartItemP
       <div className="flex gap-4">
         <div className="w-20 h-20 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0">
           <img
-            src={item.primaryImageUrl ?? 'https://via.placeholder.com/128'}
+            src={item.primaryImageUrl ?? '/placeholder.svg'}
             alt={item.skuName}
             className="w-full h-full object-cover"
           />

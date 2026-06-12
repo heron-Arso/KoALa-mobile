@@ -24,7 +24,7 @@ export default function ArtistRow({ artist, index }: ArtistRowProps) {
         <Link to={`/artist/${artist.artistCode}`} className="group block">
           <div className="relative overflow-hidden rounded-2xl md:rounded-3xl bg-gray-50 aspect-[4/5] sm:aspect-[3/4]">
             <ImageWithFallback
-              src={artist.profileImageUrl ?? 'https://via.placeholder.com/400'}
+              src={artist.profileImageUrl ?? '/placeholder.svg'}
               alt={artist.name}
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             />

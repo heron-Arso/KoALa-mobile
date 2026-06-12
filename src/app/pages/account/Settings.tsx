@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
-import { ArrowLeft, KeyRound, LogOut, Trash2, ChevronRight } from 'lucide-react';
+import { ArrowLeft, KeyRound, LogOut, Trash2, ChevronRight, FileText, Shield } from 'lucide-react';
 import { logout, withdraw } from '@/api/auth';
 import { useDialog } from '@/mobile/hooks/useDialog';
 
@@ -85,6 +85,39 @@ export default function Settings() {
               <p className="text-sm font-medium text-gray-800">로그아웃</p>
               <p className="text-xs text-gray-400 mt-0.5">현재 기기에서 로그아웃합니다</p>
             </div>
+          </button>
+        </div>
+
+        {/* 약관 및 정책 */}
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+          <div className="px-5 pt-4 pb-2">
+            <p className="text-xs font-semibold text-gray-400 tracking-wide uppercase">약관 및 정책</p>
+          </div>
+          <button
+            onClick={() => navigate('/terms')}
+            className="w-full flex items-center justify-between px-5 py-4 hover:bg-gray-50 transition-colors active:bg-gray-100"
+          >
+            <div className="flex items-center gap-3">
+              <FileText className="w-4 h-4 text-gray-400" />
+              <div className="text-left">
+                <p className="text-sm font-medium text-gray-800">이용약관</p>
+                <p className="text-xs text-gray-400 mt-0.5">서비스 이용약관을 확인합니다</p>
+              </div>
+            </div>
+            <ChevronRight className="w-4 h-4 text-gray-300" />
+          </button>
+          <button
+            onClick={() => navigate('/privacy')}
+            className="w-full flex items-center justify-between px-5 py-4 hover:bg-gray-50 transition-colors active:bg-gray-100"
+          >
+            <div className="flex items-center gap-3">
+              <Shield className="w-4 h-4 text-gray-400" />
+              <div className="text-left">
+                <p className="text-sm font-medium text-gray-800">개인정보처리방침</p>
+                <p className="text-xs text-gray-400 mt-0.5">개인정보 수집 및 이용 안내</p>
+              </div>
+            </div>
+            <ChevronRight className="w-4 h-4 text-gray-300" />
           </button>
         </div>
 

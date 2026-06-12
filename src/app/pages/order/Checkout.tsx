@@ -426,7 +426,7 @@ export default function Checkout() {
                   {cartItems.map((item: any) => (
                     <div key={item.id} className="flex gap-4 p-4 bg-gray-50 rounded-2xl items-center">
                       <img
-                        src={item.primaryImageUrl ?? 'https://via.placeholder.com/80'}
+                        src={item.primaryImageUrl ?? '/placeholder.svg'}
                         className="w-20 h-20 rounded-xl object-cover border bg-white"
                         alt={item.skuName}
                       />

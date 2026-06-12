@@ -90,7 +90,7 @@ export default function AccountWishlist() {
                                     <Link to={`/product/${item.skuCode}`}>
                                         <div className="relative aspect-square overflow-hidden bg-gray-50">
                                             <img
-                                                src={item.primaryImageUrl ?? 'https://via.placeholder.com/400'}
+                                                src={item.primaryImageUrl ?? '/placeholder.svg'}
                                                 alt={item.skuName}
                                                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                             />

@@ -45,12 +45,16 @@ export default function PaymentPage() {
         customerKey: state.customerKey ?? ANONYMOUS,
       });
 
+      // Capacitor 앱에서는 window.location.origin이 "capacitor://localhost"로
+      // 잡혀 Toss 결제 콜백이 실패하므로 환경변수에서 직접 지정
+      const paymentBase = import.meta.env.VITE_PAYMENT_BASE_URL ?? window.location.origin;
+
       const commonParams = {
         amount: { currency: 'KRW' as const, value: state.amount },
         orderId: state.orderId,
         orderName: state.orderName,
-        successUrl: `${window.location.origin}/payment/success`,
-        failUrl: `${window.location.origin}/payment/fail`,
+        successUrl: `${paymentBase}/payment/success`,
+        failUrl: `${paymentBase}/payment/fail`,
         customerEmail: state.customerEmail,
         customerName: state.customerName,
         customerMobilePhone: state.customerMobilePhone,

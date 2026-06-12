@@ -1,5 +1,7 @@
 import { useTranslation } from 'react-i18next';
-import { loginWithKakao, loginWithNaver } from '@/api/auth';
+import { useNavigate } from 'react-router';
+import { appLogin } from '@apps-in-toss/web-framework';
+import { loginWithKakao, loginWithNaver, tossAppLogin } from '@/api/auth';
 
 interface SocialLoginProps {
   isSignup: boolean;
@@ -7,6 +9,22 @@ interface SocialLoginProps {
 
 export default function SocialLogin({ isSignup }: SocialLoginProps) {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+
+  // 앱인토스 토스 로그인 (토스 미니앱 환경에서만 동작)
+  async function handleTossLogin() {
+    try {
+      // 1) 토스 SDK가 인가코드 발급 (10분 일회성)
+      const { authorizationCode, referrer } = await appLogin();
+      // 2) 서버로 즉시 전달 → mTLS 토큰교환 + 사용자정보 복호화 + 쿠키 발급
+      await tossAppLogin(authorizationCode, referrer);
+      // 3) 성공 → 홈으로
+      navigate('/');
+    } catch (e) {
+      // 토스 앱 밖(일반 브라우저)에서는 appLogin이 실패
+      console.error('토스 로그인 실패:', e);
+    }
+  }
 
   return (
     <>
@@ -20,6 +38,13 @@ export default function SocialLogin({ isSignup }: SocialLoginProps) {
       </div>
 
       <div className="space-y-3">
+        <button
+          type="button"
+          onClick={handleTossLogin}
+          className="w-full flex items-center justify-center gap-3 py-3 bg-[#0064FF] rounded-xl hover:bg-[#0055DB] transition-colors"
+        >
+          <span className="text-sm font-medium text-white">토스로 계속하기</span>
+        </button>
         <button
           type="button"
           onClick={() => loginWithKakao()}

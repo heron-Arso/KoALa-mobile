@@ -121,7 +121,7 @@ export default function CheckoutSuccess() {
                 <div key={idx} className="flex gap-5 items-center">
                   <div className="w-16 h-16 rounded-2xl overflow-hidden bg-gray-50 border border-gray-100 flex-shrink-0">
                     <img
-                      src={item.primaryImageUrl ?? 'https://via.placeholder.com/64'}
+                      src={item.primaryImageUrl ?? '/placeholder.svg'}
                       className="w-full h-full object-cover"
                       alt={item.skuName}
                     />

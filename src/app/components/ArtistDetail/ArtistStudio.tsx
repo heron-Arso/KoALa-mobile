@@ -5,7 +5,7 @@ interface ArtistStudioProps {
   artistName?: string;
 }
 
-const PLACEHOLDER = 'https://via.placeholder.com/400x300';
+const PLACEHOLDER = '/placeholder.svg';
 
 export function ArtistStudio({ studioImages, artistName }: ArtistStudioProps) {
   const images =

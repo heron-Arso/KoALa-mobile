@@ -5,7 +5,8 @@ import Home from "@/app/pages/Home";
 import Gallery from "@/app/pages/gallery/Gallery";
 import Search from "@/app/pages/Search";
 import ARView from "@/app/pages/ARView";
-import ResellMarket from "@/app/pages/ResellMarket";
+// TODO: 리셀 마켓 추후 활성화
+// import ResellMarket from "@/app/pages/ResellMarket";
 
 // 아티스트
 import ArtistLab from "@/app/pages/Artist/ArtistLab";
@@ -74,7 +75,8 @@ export function AppRoutes() {
       <Route path="/product/:id/360" element={<Product360View />} /> {/* 360도 뷰어 */}
       <Route path="/art/:id" element={<ArtDetail />} />              {/* 아트 상세 */}
       <Route path="/ar-view" element={<ARView />} />                 {/* AR 뷰어 */}
-      <Route path="/resell" element={<ResellMarket />} />            {/* 리셀 마켓 */}
+      {/* TODO: 리셀 마켓 추후 활성화 */}
+      {/* <Route path="/resell" element={<ResellMarket />} /> */}            {/* 리셀 마켓 */}
 
       {/* ── 아티스트 ──────────────────────────────────── */}
       <Route path="/artist-lab" element={<ArtistLab />} />           {/* 아티스트 목록 */}

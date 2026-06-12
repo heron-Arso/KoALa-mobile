@@ -25,7 +25,7 @@ export default function ProductCard({
       <div className="relative overflow-hidden rounded-xl bg-gray-100">
         <div className={`relative w-full ${viewMode === 'grid' ? 'aspect-square' : 'aspect-[4/3]'}`}>
           <ImageWithFallback
-            src={sku.primaryImageUrl ?? 'https://via.placeholder.com/400'}
+            src={sku.primaryImageUrl ?? '/placeholder.svg'}
             alt={sku.name}
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
           />

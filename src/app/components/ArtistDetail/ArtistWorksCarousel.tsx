@@ -18,7 +18,7 @@ interface ArtistWorksCarouselProps {
 const PLACEHOLDER_WORKS: WorkItem[] = Array.from({ length: 6 }, (_, i) => ({
   id: String(i + 1),
   title: `작품 ${i + 1}`,
-  imageUrl: 'https://via.placeholder.com/280x350',
+  imageUrl: '/placeholder.svg',
 }));
 
 export function ArtistWorksCarousel({ works = PLACEHOLDER_WORKS, artistId }: ArtistWorksCarouselProps) {

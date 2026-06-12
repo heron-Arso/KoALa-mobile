@@ -126,7 +126,7 @@ export default function AccountOrders() {
                             <div className="flex gap-4 md:gap-5 items-center">
                               <div className="w-16 h-16 md:w-20 md:h-20 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0 border border-gray-50">
                                 <img
-                                  src={order.firstSkuImageUrl ?? 'https://via.placeholder.com/80'}
+                                  src={order.firstSkuImageUrl ?? '/placeholder.svg'}
                                   alt={order.firstSkuName}
                                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                                 />

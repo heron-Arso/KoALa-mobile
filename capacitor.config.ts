@@ -1,10 +1,7 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
-// 빌드 환경에 따라 서버 URL 결정
-// - 프로덕션: 실제 서버에서 직접 로드 (OAuth·Toss 결제가 웹과 동일하게 작동)
-// - 개발: 로컬 번들 사용 (VITE_APP_ENV=development 일 때)
-const isProd = process.env.NODE_ENV === 'production';
-
+// 앱은 로컬 번들(dist)을 사용한다. (모바일 전용 UX — 하단 탭바·인트로·오프라인 배너 등)
+// 외부 URL(아래 allowNavigation)은 OAuth/토스 결제 흐름에서 WebView 이동을 허용하기 위함이다.
 const config: CapacitorConfig = {
   appId: 'com.koala.app',
   appName: 'KoALa',
@@ -25,16 +22,6 @@ const config: CapacitorConfig = {
     'koala-art.co.kr',
     '*.koala-art.co.kr',
   ],
-
-  // 프로덕션 빌드 시 서버에서 직접 로드
-  // → 카카오/네이버 OAuth, Toss 결제가 추가 설정 없이 작동
-  // → 앱 업데이트 없이 화면 수정 가능 (심사 불필요)
-  ...(isProd && {
-    server: {
-      url: 'https://koala-art.co.kr',
-      cleartext: false,
-    },
-  }),
 
   plugins: {
     SplashScreen: {

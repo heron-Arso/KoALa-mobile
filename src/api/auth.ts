@@ -42,3 +42,8 @@ export const loginWithKakao = () => {
 export const loginWithNaver = () => {
   window.location.href = import.meta.env.VITE_OAUTH_NAVER_URL as string;
 };
+
+// 앱인토스 토스 로그인 — appLogin()으로 받은 인가코드를 서버로 전달
+// (성공 시 백엔드가 HttpOnly 쿠키로 accessToken/refreshToken 발급)
+export const tossAppLogin = (authorizationCode: string, referrer?: string) =>
+  instance.post('/api/v1/auth/toss/login', { authorizationCode, referrer });

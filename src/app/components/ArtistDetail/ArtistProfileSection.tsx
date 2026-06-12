@@ -13,7 +13,7 @@ export function ArtistProfileSection({ name, description, profileImageUrl }: Art
       <div className="flex flex-col gap-6 items-start">
         <div className="w-full aspect-[3/4] bg-gray-100 overflow-hidden">
           <ImageWithFallback
-            src={profileImageUrl ?? 'https://via.placeholder.com/300x400'}
+            src={profileImageUrl ?? '/placeholder.svg'}
             alt={name}
             className="w-full h-full object-cover"
           />

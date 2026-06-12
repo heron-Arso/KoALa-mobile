@@ -42,9 +42,15 @@ export default function Privacy() {
               <li>카카오: 닉네임, 이메일</li>
               <li>네이버: 이름, 이메일</li>
             </ul>
+            <p className="font-medium text-black mt-2">배송 정보 (상품 주문 시)</p>
+            <ul className="space-y-1 list-disc list-inside">
+              <li>수령인 이름, 전화번호, 주소 (주문 배송 목적)</li>
+            </ul>
             <p className="font-medium text-black mt-2">자동 수집 항목</p>
             <ul className="space-y-1 list-disc list-inside">
               <li>접속 IP, 쿠키, 서비스 이용 기록</li>
+              <li>FCM 푸시 알림 토큰 (푸시 알림 발송 목적)</li>
+              <li>앱 오류 진단 정보 (Sentry 크래시·성능 로그, 서비스 안정성 목적)</li>
             </ul>
           </div>
         </section>
@@ -103,6 +109,14 @@ export default function Privacy() {
                 <tr>
                   <td className="py-2 pr-4">Amazon Web Services</td>
                   <td className="py-2">서버 인프라 운영</td>
+                </tr>
+                <tr>
+                  <td className="py-2 pr-4">Google (Firebase Cloud Messaging)</td>
+                  <td className="py-2">푸시 알림 발송</td>
+                </tr>
+                <tr>
+                  <td className="py-2 pr-4">Sentry</td>
+                  <td className="py-2">앱 오류 진단 및 성능 모니터링</td>
                 </tr>
               </tbody>
             </table>
