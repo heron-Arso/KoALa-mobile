@@ -85,7 +85,6 @@ export function Header() {
     ? 'bg-transparent border-transparent'
     : 'bg-white/95 border-b border-gray-100 backdrop-blur-sm shadow-sm';
 
-  const logoClass = isTransparent && isHeroDark ? 'text-white' : 'text-black';
   const iconClass = isTransparent && isHeroDark ? 'text-white/80 hover:text-white' : 'text-gray-400 hover:text-black';
 
   const menus = [
@@ -111,9 +110,13 @@ export function Header() {
             <Link
               to="/"
               onClick={() => setIsMenuOpen(false)}
-              className={`text-2xl font-bold tracking-tight z-[120] transition-colors ${isMenuOpen ? 'text-black' : logoClass}`}
+              className="z-[120]"
             >
-              {t('header.logo')}
+              <img
+                src={!isMenuOpen && isTransparent && isHeroDark ? '/logo-white.svg' : '/logo.svg'}
+                alt={t('header.logo') as string}
+                className="h-9 w-auto"
+              />
             </Link>
 
             {/* [WEB] 중앙 메뉴 */}
@@ -144,7 +147,7 @@ export function Header() {
                 <ShoppingCart className="w-5 h-5" />
                 {cartCount > 0 && (
                   <span className={`absolute -top-1.5 -right-1.5 w-4 h-4 rounded-full flex items-center justify-center text-[9px] font-bold ${
-                    isMenuOpen ? 'bg-black text-white' : (isTransparent && isHeroDark ? 'bg-white text-black' : 'bg-black text-white')
+                    isMenuOpen ? 'bg-koala-navy text-white' : (isTransparent && isHeroDark ? 'bg-white text-black' : 'bg-koala-navy text-white')
                   }`}>
                     {cartCount}
                   </span>

@@ -84,7 +84,7 @@ export default function ResellMarket() {
               key={filter}
               onClick={() => setSelectedFilter(filter)}
               className={`px-3 py-1.5 rounded-full text-xs whitespace-nowrap transition-all flex-shrink-0 ${
-                selectedFilter === filter ? 'bg-black text-white' : 'bg-gray-100 text-gray-600'
+                selectedFilter === filter ? 'bg-koala-navy text-white' : 'bg-gray-100 text-gray-600'
               }`}
             >
               {filter}

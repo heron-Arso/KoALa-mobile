@@ -118,7 +118,7 @@ export default function PaymentPage() {
                 <span className="text-xs font-bold text-gray-900">{m.label}</span>
                 <span className="text-[10px] text-gray-400">{m.desc}</span>
                 {selected === m.id && (
-                  <div className="w-4 h-4 bg-black rounded-full flex items-center justify-center">
+                  <div className="w-4 h-4 bg-koala-navy rounded-full flex items-center justify-center">
                     <Check className="w-2.5 h-2.5 text-white" />
                   </div>
                 )}
@@ -143,7 +143,7 @@ export default function PaymentPage() {
           disabled={isProcessing}
           className={`w-full py-5 rounded-2xl font-bold text-base transition-all duration-150 flex items-center justify-center gap-2 ${
             !isProcessing
-              ? 'bg-black text-white active:scale-[0.98] shadow-lg shadow-black/10'
+              ? 'bg-koala-navy text-white active:scale-[0.98] shadow-lg shadow-black/10'
               : 'bg-gray-100 text-gray-300 cursor-not-allowed'
           }`}
         >

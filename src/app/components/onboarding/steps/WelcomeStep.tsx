@@ -13,7 +13,7 @@ export default function WelcomeStep({ onNext }: { onNext: () => void }) {
       <p className="text-gray-400 leading-relaxed mb-7 text-sm">{t('auth.onboarding.welcome.desc')}</p>
       <button
         onClick={onNext}
-        className="inline-flex items-center gap-2 px-8 py-4 bg-black text-white rounded-xl hover:bg-gray-800 transition-all active:scale-95"
+        className="inline-flex items-center gap-2 px-8 py-4 bg-koala-navy text-white rounded-xl hover:bg-koala-navy-hover transition-all active:scale-95"
       >
         {t('auth.onboarding.welcome.start')}
         <ChevronRight className="w-4 h-4" />

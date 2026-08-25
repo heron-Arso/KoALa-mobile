@@ -154,7 +154,7 @@ export default function Product360View() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center">
+      <div className="min-h-screen bg-koala-navy flex items-center justify-center">
         <div className="w-8 h-8 border-2 border-white border-t-transparent rounded-full animate-spin" />
       </div>
     );
@@ -162,7 +162,7 @@ export default function Product360View() {
 
   if (!sku || images360.length === 0) {
     return (
-      <div className="min-h-screen bg-black flex flex-col items-center justify-center text-white">
+      <div className="min-h-screen bg-koala-navy flex flex-col items-center justify-center text-white">
         <p className="text-gray-400 mb-6">360° 이미지를 찾을 수 없습니다.</p>
         <button
           onClick={() => navigate(-1)}
@@ -175,7 +175,7 @@ export default function Product360View() {
   }
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-koala-navy">
 
       {/* Toast */}
       {showToast && (
@@ -195,7 +195,7 @@ export default function Product360View() {
         </div>
       )}
 
-      <div ref={containerRef} className="fixed inset-0 pt-4 bg-black">
+      <div ref={containerRef} className="fixed inset-0 pt-4 bg-koala-navy">
 
         {/* 헤더 */}
         <div className="absolute top-20 left-0 right-0 z-20 px-8 py-6 bg-gradient-to-b from-black/80 to-transparent">

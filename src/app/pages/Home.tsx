@@ -105,7 +105,7 @@ export default function Home() {
     <div className="bg-white">
 
       {/* Hero Section — 페이드 캐러셀 */}
-      <section className="relative h-[80vh] min-h-[600px] overflow-hidden bg-black">
+      <section className="relative h-[80vh] min-h-[600px] overflow-hidden bg-koala-navy">
         {/* 배너 이미지 레이어 */}
         {banners.map((b, i) => (
           <div
@@ -240,7 +240,7 @@ export default function Home() {
                     />
                     {sku.salePrice && (
                       <div className="absolute top-4 left-4">
-                        <div className="px-3 py-1.5 bg-white/90 backdrop-blur-md text-black text-[10px] md:text-xs font-black rounded-lg shadow-sm">
+                        <div className="px-3 py-1.5 bg-koala-red text-white text-[10px] md:text-xs font-black rounded-lg shadow-sm">
                           SALE
                         </div>
                       </div>
@@ -265,7 +265,7 @@ export default function Home() {
           )}
 
           <div className="mt-12 md:hidden">
-            <Link to="/smart-store" className="flex items-center justify-center w-full py-4 bg-black text-white rounded-full font-bold">
+            <Link to="/smart-store" className="flex items-center justify-center w-full py-4 bg-koala-navy text-white rounded-full font-bold">
               전체 상품 보기
             </Link>
           </div>
@@ -283,11 +283,11 @@ export default function Home() {
             <h2 className="text-3xl md:text-5xl font-bold mb-6 tracking-tighter break-keep">{introTitle}</h2>
             <p className="text-base md:text-lg text-gray-500 leading-relaxed mb-10 break-keep">{introDescription}</p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Link to={introPrimaryLink} className="px-8 py-4 bg-black text-white rounded-full font-bold hover:bg-gray-800 transition-all text-center">
+              <Link to={introPrimaryLink} className="px-8 py-4 bg-koala-navy text-white rounded-full font-bold hover:bg-koala-navy-hover transition-all text-center">
                 작가 탐색하기
               </Link>
               {/* AR 뷰어 준비 중
-              <Link to="/ar-view" className="px-8 py-4 border-2 border-black rounded-full font-bold hover:bg-black hover:text-white transition-all text-center">
+              <Link to="/ar-view" className="px-8 py-4 border-2 border-black rounded-full font-bold hover:bg-koala-navy hover:text-white transition-all text-center">
                 AR 뷰어 체험하기
               </Link>
               */}

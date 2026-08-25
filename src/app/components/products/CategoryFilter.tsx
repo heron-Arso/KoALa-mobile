@@ -24,7 +24,7 @@ export default function CategoryFilter({
             onClick={() => onSelectCategory(category)}
             className={`px-3 py-1.5 rounded-full text-xs transition-all whitespace-nowrap border flex-shrink-0 ${
               selectedCategory === category
-                ? 'bg-black text-white border-black'
+                ? 'bg-koala-red text-white border-koala-red'
                 : 'bg-white text-gray-500 border-gray-200 hover:border-gray-900'
             }`}
           >

@@ -18,10 +18,10 @@ export default function HomePlatformIntro() {
             {t('home.intro.description')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
-            <Link to="/artist-lab" className="px-8 py-4 bg-black text-white rounded-full font-bold hover:bg-gray-800 text-center">
+            <Link to="/artist-lab" className="px-8 py-4 bg-koala-navy text-white rounded-full font-bold hover:bg-koala-navy-hover text-center">
               {t('home.intro.exploreArtist')}
             </Link>
-            <Link to="/ar-view" className="px-8 py-4 border-2 border-black rounded-full font-bold hover:bg-black hover:text-white text-center">
+            <Link to="/ar-view" className="px-8 py-4 border-2 border-black rounded-full font-bold hover:bg-koala-navy hover:text-white text-center">
               {t('home.intro.tryAR')}
             </Link>
           </div>

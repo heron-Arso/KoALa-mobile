@@ -15,7 +15,7 @@ export function ProductToast({ show, message, showCartLink, onClose }: Props) {
 
   return (
     <div className="fixed bottom-24 left-4 right-4 z-[100] animate-in fade-in slide-in-from-bottom-4 duration-300">
-      <div className="bg-black text-white px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-3">
+      <div className="bg-koala-navy text-white px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-3">
         <CheckCircle2 className="w-4 h-4 text-green-400 flex-shrink-0" />
         <div className="flex-1">
           <p className="text-sm font-semibold">{message}</p>

@@ -40,10 +40,10 @@ function OrderStatusStepper({ status }: { status: string }) {
           <div key={step} className="flex-1 flex flex-col items-center">
             <div className="flex items-center w-full">
               {idx > 0 && (
-                <div className={`flex-1 h-0.5 mt-0 ${done || active ? 'bg-black' : 'bg-gray-200'}`} />
+                <div className={`flex-1 h-0.5 mt-0 ${done || active ? 'bg-koala-navy' : 'bg-gray-200'}`} />
               )}
               <div className={`w-6 h-6 rounded-full flex items-center justify-center border-2 flex-shrink-0 ${
-                active ? 'border-black bg-black' : done ? 'border-black bg-black' : 'border-gray-200 bg-white'
+                active ? 'border-black bg-koala-navy' : done ? 'border-black bg-koala-navy' : 'border-gray-200 bg-white'
               }`}>
                 {done || active ? (
                   <CheckCircle className="w-3.5 h-3.5 text-white" />
@@ -52,7 +52,7 @@ function OrderStatusStepper({ status }: { status: string }) {
                 )}
               </div>
               {idx < STEPS.length - 1 && (
-                <div className={`flex-1 h-0.5 ${done ? 'bg-black' : 'bg-gray-200'}`} />
+                <div className={`flex-1 h-0.5 ${done ? 'bg-koala-navy' : 'bg-gray-200'}`} />
               )}
             </div>
             <span className={`text-[9px] mt-1.5 font-bold text-center leading-tight px-0.5 ${
@@ -263,7 +263,7 @@ export default function OrderDetail() {
             {/* 액션 버튼 */}
             <div className="flex flex-col gap-3 pt-2">
               {order.orderStatus === 'SHIPPED' && (
-                <button className="flex items-center justify-center gap-2 w-full py-4 bg-black text-white rounded-2xl font-bold text-sm active:scale-[0.98] transition-transform">
+                <button className="flex items-center justify-center gap-2 w-full py-4 bg-koala-navy text-white rounded-2xl font-bold text-sm active:scale-[0.98] transition-transform">
                   <Truck className="w-4 h-4" /> 배송 조회
                 </button>
               )}

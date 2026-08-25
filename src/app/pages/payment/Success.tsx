@@ -77,7 +77,7 @@ export default function PaymentSuccess() {
           <div className="space-y-3">
             <button
               onClick={() => navigate('/cart')}
-              className="w-full py-3 bg-black text-white rounded-xl active:scale-[0.98] transition-transform"
+              className="w-full py-3 bg-koala-navy text-white rounded-xl active:scale-[0.98] transition-transform"
             >
               장바구니로 돌아가기
             </button>

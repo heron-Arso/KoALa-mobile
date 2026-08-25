@@ -223,7 +223,7 @@ export default function Auth() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full py-3 bg-black text-white rounded-xl hover:bg-gray-900 transition-colors disabled:opacity-50 font-medium"
+                    className="w-full py-3 bg-koala-navy text-white rounded-xl hover:bg-koala-navy-hover transition-colors disabled:opacity-50 font-medium"
                   >
                     {loading ? '로그인 중...' : '로그인'}
                   </button>
@@ -332,7 +332,7 @@ export default function Auth() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full py-3 bg-black text-white rounded-xl hover:bg-gray-900 transition-colors disabled:opacity-50 font-medium"
+                    className="w-full py-3 bg-koala-navy text-white rounded-xl hover:bg-koala-navy-hover transition-colors disabled:opacity-50 font-medium"
                   >
                     {loading ? '가입 중...' : '회원가입'}
                   </button>

@@ -35,7 +35,7 @@ export default function ProductCard({
               {t(`store.categories.${sku.genre}`, { defaultValue: sku.genre })}
             </div>
             {sku.isLimitedEdition && (
-              <div className="w-fit px-2 py-1 rounded-md bg-black text-white text-[9px] font-bold uppercase shadow-sm">
+              <div className="w-fit px-2 py-1 rounded-md bg-koala-red text-white text-[9px] font-bold uppercase shadow-sm">
                 {t('store.product.limited')}
               </div>
             )}
@@ -64,8 +64,8 @@ export default function ProductCard({
             disabled={isWishlistLoading}
             className={`absolute bottom-2 right-2 p-2 rounded-full backdrop-blur-sm shadow-sm transition-all duration-200 ${
               isWishlisted
-                ? 'bg-red-500 text-white'
-                : 'bg-white/90 text-gray-500 hover:bg-white hover:text-red-400'
+                ? 'bg-koala-red text-white'
+                : 'bg-white/90 text-gray-500 hover:bg-white hover:text-koala-red'
             } ${isWishlistLoading ? 'opacity-60 cursor-wait' : ''}`}
           >
             <Heart className="w-3.5 h-3.5" fill={isWishlisted ? 'currentColor' : 'none'} />

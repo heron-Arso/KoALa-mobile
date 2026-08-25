@@ -371,7 +371,7 @@ export default function Checkout() {
                       <button
                         type="button"
                         onClick={handleAddressSearch}
-                        className="px-5 py-3 bg-black text-white rounded-xl hover:bg-gray-800 transition-colors font-medium text-sm flex items-center gap-2 whitespace-nowrap"
+                        className="px-5 py-3 bg-koala-navy text-white rounded-xl hover:bg-koala-navy-hover transition-colors font-medium text-sm flex items-center gap-2 whitespace-nowrap"
                       >
                         <Search className="w-4 h-4" /> 찾기
                       </button>
@@ -465,7 +465,7 @@ export default function Checkout() {
                         <span className="text-[10px] text-gray-400">{method.description}</span>
                       </div>
                       {selectedMethod === method.id && (
-                        <div className="w-5 h-5 bg-black rounded-full flex items-center justify-center">
+                        <div className="w-5 h-5 bg-koala-navy rounded-full flex items-center justify-center">
                           <Check className="w-3 h-3 text-white" />
                         </div>
                       )}
@@ -508,7 +508,7 @@ export default function Checkout() {
                   <label className="flex items-center gap-3 cursor-pointer group">
                     <div
                       onClick={toggleAll}
-                      className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-colors flex-shrink-0 ${allAgreed ? 'bg-black border-black' : 'border-gray-300'}`}
+                      className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-colors flex-shrink-0 ${allAgreed ? 'bg-koala-navy border-black' : 'border-gray-300'}`}
                     >
                       {allAgreed && <Check className="w-3 h-3 text-white" />}
                     </div>
@@ -524,7 +524,7 @@ export default function Checkout() {
                         <div className="flex items-center gap-2">
                           <div
                             onClick={() => setAgreed((prev) => ({ ...prev, [key]: !prev[key] }))}
-                            className={`w-4 h-4 rounded border-2 flex items-center justify-center transition-colors flex-shrink-0 ${agreed[key] ? 'bg-black border-black' : 'border-gray-300'}`}
+                            className={`w-4 h-4 rounded border-2 flex items-center justify-center transition-colors flex-shrink-0 ${agreed[key] ? 'bg-koala-navy border-black' : 'border-gray-300'}`}
                           >
                             {agreed[key] && <Check className="w-2.5 h-2.5 text-white" />}
                           </div>
@@ -542,7 +542,7 @@ export default function Checkout() {
                   onClick={handleOrder}
                   disabled={cartItems.length === 0 || !selectedMethod || !allAgreed || isProcessing}
                   className={`w-full py-5 rounded-2xl font-bold flex items-center justify-center gap-2 transition-all shadow-lg ${cartItems.length > 0 && selectedMethod && allAgreed && !isProcessing
-                      ? 'bg-black text-white hover:bg-gray-800 shadow-black/10 active:scale-[0.98]'
+                      ? 'bg-koala-red text-white hover:bg-koala-red-hover shadow-black/10 active:scale-[0.98]'
                       : 'bg-gray-100 text-gray-300 cursor-not-allowed shadow-none'
                     }`}
                 >

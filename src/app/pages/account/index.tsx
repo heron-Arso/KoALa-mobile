@@ -109,7 +109,7 @@ export default function Account() {
         {/* 프로필 헤더 */}
         <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
           <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-full bg-black text-white flex items-center justify-center text-xl font-medium flex-shrink-0">
+            <div className="w-14 h-14 rounded-full bg-koala-navy text-white flex items-center justify-center text-xl font-medium flex-shrink-0">
               {initials}
             </div>
             <div className="flex-1 min-w-0">
@@ -150,7 +150,7 @@ export default function Account() {
                 <button
                   type="submit"
                   disabled={saving}
-                  className="flex-1 py-3 bg-black text-white rounded-xl text-sm font-medium disabled:opacity-50"
+                  className="flex-1 py-3 bg-koala-navy text-white rounded-xl text-sm font-medium disabled:opacity-50"
                 >
                   {saving ? '저장 중...' : '저장'}
                 </button>

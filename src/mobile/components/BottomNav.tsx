@@ -83,7 +83,7 @@ export default function BottomNav() {
                                 className="flex flex-col items-center flex-1"
                             >
                                 <div
-                                    className={`-mt-8 mb-1 flex items-center justify-center w-14 h-14 rounded-full ring-4 ring-white shadow-lg transition-colors ${active ? 'bg-black' : 'bg-gray-800'}`}
+                                    className={`-mt-8 mb-1 flex items-center justify-center w-14 h-14 rounded-full ring-4 ring-white shadow-lg transition-colors ${active ? 'bg-koala-navy' : 'bg-gray-800'}`}
                                 >
                                     <Icon className="w-6 h-6 text-white" strokeWidth={2.2} />
                                 </div>
@@ -107,7 +107,7 @@ export default function BottomNav() {
                                     strokeWidth={active ? 2.5 : 1.8}
                                 />
                                 {tabPath === '/cart' && cartCount > 0 && (
-                                    <span className="absolute -top-1 -right-1.5 bg-black text-white text-[9px] font-bold rounded-full min-w-[14px] h-[14px] flex items-center justify-center px-0.5">
+                                    <span className="absolute -top-1 -right-1.5 bg-koala-navy text-white text-[9px] font-bold rounded-full min-w-[14px] h-[14px] flex items-center justify-center px-0.5">
                                         {cartCount > 9 ? '9+' : cartCount}
                                     </span>
                                 )}

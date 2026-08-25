@@ -41,7 +41,7 @@ export default function PreferencesStep({ preferences, onChange, onNext, onSkip 
                 </div>
               </div>
               <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
-                preferences[key] ? 'border-black bg-black' : 'border-gray-200'
+                preferences[key] ? 'border-black bg-koala-navy' : 'border-gray-200'
               }`}>
                 {preferences[key] && <Check className="w-3 h-3 text-white" />}
               </div>
@@ -59,7 +59,7 @@ export default function PreferencesStep({ preferences, onChange, onNext, onSkip 
         </button>
         <button
           onClick={onNext}
-          className="flex-1 py-3 bg-black text-white rounded-xl hover:bg-gray-800 transition-colors text-sm font-medium"
+          className="flex-1 py-3 bg-koala-navy text-white rounded-xl hover:bg-koala-navy-hover transition-colors text-sm font-medium"
         >
           {t('auth.onboarding.preferences.next')}
         </button>

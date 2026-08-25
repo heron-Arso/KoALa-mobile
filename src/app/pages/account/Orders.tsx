@@ -81,7 +81,7 @@ export default function AccountOrders() {
                   <h3 className="text-lg md:text-xl font-bold mb-2">아직 주문 내역이 없습니다</h3>
                   <Link
                     to="/store"
-                    className="inline-block mt-6 px-8 py-3.5 bg-black text-white rounded-2xl hover:bg-gray-800 transition-all font-bold text-sm"
+                    className="inline-block mt-6 px-8 py-3.5 bg-koala-navy text-white rounded-2xl hover:bg-koala-navy-hover transition-all font-bold text-sm"
                   >
                     스토어 구경하기
                   </Link>
@@ -150,7 +150,7 @@ export default function AccountOrders() {
                           {/* 버튼 */}
                           <div className="flex flex-col sm:flex-row gap-2 mt-8 pt-6 border-t border-gray-50">
                             {order.orderStatus === 'SHIPPED' && (
-                              <button className="flex items-center justify-center gap-2 px-5 py-3 bg-black text-white rounded-xl hover:bg-gray-800 transition-all text-xs font-bold">
+                              <button className="flex items-center justify-center gap-2 px-5 py-3 bg-koala-navy text-white rounded-xl hover:bg-koala-navy-hover transition-all text-xs font-bold">
                                 <Box className="w-4 h-4" /> 배송 조회
                               </button>
                             )}

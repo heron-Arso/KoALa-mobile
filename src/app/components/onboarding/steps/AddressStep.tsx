@@ -68,7 +68,7 @@ export default function AddressStep({ address, onChange, onNext, onSkip }: Props
         </button>
         <button
           onClick={onNext}
-          className="flex-1 py-3 bg-black text-white rounded-xl hover:bg-gray-800 transition-colors text-sm font-medium"
+          className="flex-1 py-3 bg-koala-navy text-white rounded-xl hover:bg-koala-navy-hover transition-colors text-sm font-medium"
         >
           {t('auth.onboarding.address.save')}
         </button>

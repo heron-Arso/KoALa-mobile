@@ -61,7 +61,7 @@ export default function ArtistRow({ artist, index }: ArtistRowProps) {
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
             <Link
               to={`/artist/${artist.artistCode}`}
-              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-black text-white rounded-full hover:bg-gray-800 transition-all font-medium text-sm"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-koala-navy text-white rounded-full hover:bg-koala-navy-hover transition-all font-medium text-sm"
             >
               {t('artistLab.row.viewProfile')}
               <ArrowRight className="w-4 h-4" />

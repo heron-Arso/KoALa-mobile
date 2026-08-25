@@ -86,7 +86,7 @@ export function ArtistHero({ artist, isFollowing: initialFollowing }: ArtistHero
           <div className="flex flex-col sm:flex-row gap-3">
             <Link
               to="/smart-store"
-              className="flex-1 py-4 md:py-5 bg-black text-white rounded-full font-bold text-sm md:text-base hover:bg-gray-800 transition-all active:scale-95 text-center"
+              className="flex-1 py-4 md:py-5 bg-koala-navy text-white rounded-full font-bold text-sm md:text-base hover:bg-koala-navy-hover transition-all active:scale-95 text-center"
             >
               {t('detail.viewWorks')}
             </Link>
@@ -97,7 +97,7 @@ export function ArtistHero({ artist, isFollowing: initialFollowing }: ArtistHero
               disabled={loading}
               className={`flex items-center justify-center gap-2 px-6 py-4 md:py-5 rounded-full font-bold text-sm md:text-base transition-all active:scale-95 disabled:opacity-50 ${
                 isFollowing
-                  ? 'bg-black text-white'
+                  ? 'bg-koala-navy text-white'
                   : 'border border-gray-200 text-gray-700 hover:border-black hover:text-black'
               }`}
             >

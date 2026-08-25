@@ -93,7 +93,7 @@ export default function AccountAddresses() {
           <h2 className="text-lg">저장된 배송지 ({addresses.length})</h2>
           <button
             onClick={handleAddClick}
-            className="flex items-center gap-2 px-4 py-2 bg-black text-white rounded-xl hover:bg-gray-900 transition-colors text-sm"
+            className="flex items-center gap-2 px-4 py-2 bg-koala-navy text-white rounded-xl hover:bg-koala-navy-hover transition-colors text-sm"
           >
             <Plus className="w-4 h-4" /> 배송지 추가
           </button>

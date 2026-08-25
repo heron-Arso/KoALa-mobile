@@ -143,7 +143,7 @@ export default function Search() {
                     <button
                       key={index}
                       onClick={() => handleSearch(trend)}
-                      className="px-4 py-2 bg-white rounded-full text-sm hover:bg-black hover:text-white transition-colors"
+                      className="px-4 py-2 bg-white rounded-full text-sm hover:bg-koala-navy hover:text-white transition-colors"
                     >
                       {trend}
                     </button>
@@ -165,7 +165,7 @@ export default function Search() {
                     onClick={() => setActiveFilter(filter.key as typeof activeFilter)}
                     className={`px-4 py-3 text-sm border-b-2 transition-colors ${
                       activeFilter === filter.key
-                        ? 'border-black text-black'
+                        ? 'border-koala-red text-koala-red'
                         : 'border-transparent text-gray-400 hover:text-black'
                     }`}
                   >

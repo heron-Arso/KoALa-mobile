@@ -40,7 +40,7 @@ export default function IntroScreen({ onComplete }: IntroScreenProps) {
 
   return (
     <div
-      className="fixed inset-0 z-[9999] bg-black flex flex-col items-center justify-center"
+      className="fixed inset-0 z-[9999] bg-koala-navy flex flex-col items-center justify-center"
       style={{
         transition: 'opacity 0.7s ease-out',
         opacity: phase === 'fadeout' ? 0 : 1,

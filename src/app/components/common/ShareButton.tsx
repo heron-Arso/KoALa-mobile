@@ -44,7 +44,7 @@ export function ShareButton({ title, description, url, className = '' }: ShareBu
 
       {/* 복사 완료 토스트 */}
       {copied && (
-        <div className="fixed bottom-24 left-1/2 -translate-x-1/2 bg-black text-white text-sm px-5 py-2.5 rounded-full z-50 pointer-events-none shadow-lg">
+        <div className="fixed bottom-24 left-1/2 -translate-x-1/2 bg-koala-navy text-white text-sm px-5 py-2.5 rounded-full z-50 pointer-events-none shadow-lg">
           링크가 복사됐습니다 ✓
         </div>
       )}

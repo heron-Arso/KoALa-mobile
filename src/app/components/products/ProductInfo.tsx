@@ -31,7 +31,7 @@ export function ProductInfo({ sku, selectedColor, onColorSelect }: Props) {
           {sku.genre}
         </span>
         {sku.isLimitedEdition && (
-          <span className="text-[10px] font-bold px-2.5 py-1 bg-amber-50 text-amber-600 border border-amber-200 rounded-full tracking-wide whitespace-nowrap">
+          <span className="text-[10px] font-bold px-2.5 py-1 bg-koala-red text-white rounded-full tracking-wide whitespace-nowrap">
             {t('product.detail.gallery.limitedEdition')}
           </span>
         )}
@@ -53,10 +53,10 @@ export function ProductInfo({ sku, selectedColor, onColorSelect }: Props) {
       {/* Price */}
       <div className="mb-5">
         <div className="flex items-baseline gap-2 flex-wrap">
-          <span className="text-2xl font-bold text-rose-500 tracking-tight">
+          <span className={`text-2xl font-bold tracking-tight ${hasDiscount ? 'text-koala-red' : 'text-gray-900'}`}>
             {formatPrice(price)}
           </span>
-          <span className="text-sm font-semibold text-rose-400">KRW</span>
+          <span className="text-sm font-semibold text-gray-400">KRW</span>
           {hasDiscount && (
             <span className="text-sm text-gray-400 line-through">
               {formatPrice(sku.listPrice)}

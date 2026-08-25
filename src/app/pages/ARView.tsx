@@ -172,7 +172,7 @@ export default function ARView() {
   const screenH = containerRef.current?.getBoundingClientRect().height ?? window.innerHeight;
 
   return (
-    <div className="fixed inset-0 bg-black overflow-hidden select-none">
+    <div className="fixed inset-0 bg-koala-navy overflow-hidden select-none">
 
       {/* ── 카메라 배경 ── */}
       <video
@@ -346,7 +346,7 @@ export default function ARView() {
                 <button
                   onClick={handleAddToCart}
                   disabled={cartLoading || sku.status === 'OUT_OF_STOCK'}
-                  className="px-4 py-2 bg-black text-white rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 disabled:opacity-50"
+                  className="px-4 py-2 bg-koala-navy text-white rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 disabled:opacity-50"
                 >
                   <ShoppingCart className="w-3.5 h-3.5" />
                   {sku.status === 'OUT_OF_STOCK' ? '품절' : cartLoading ? '...' : '담기'}
@@ -360,7 +360,7 @@ export default function ARView() {
       {/* ── 토스트 ── */}
       {toast && (
         <div className="absolute left-1/2 -translate-x-1/2 z-50 w-[85vw] max-w-sm" style={{ bottom: sku ? 170 : 80 }}>
-          <div className="bg-black text-white px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3">
+          <div className="bg-koala-navy text-white px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3">
             <CheckCircle2 className="w-4 h-4 text-green-400 flex-shrink-0" />
             <p className="text-sm font-semibold">{toast}</p>
           </div>

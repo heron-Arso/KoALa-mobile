@@ -214,7 +214,7 @@ export default function OrderConfirmation() {
                   className={`w-full py-4 rounded-xl mb-3 transition-all ${
                     isProcessing
                       ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                      : 'bg-black text-white hover:bg-gray-900'
+                      : 'bg-koala-navy text-white hover:bg-koala-navy-hover'
                   }`}
                 >
                   {isProcessing ? (

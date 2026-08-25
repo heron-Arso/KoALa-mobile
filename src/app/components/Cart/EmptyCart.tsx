@@ -12,7 +12,7 @@ export default function EmptyCart() {
       <p className="text-sm text-gray-400 mb-8 px-6">{t('cart.emptyState.description')}</p>
       <Link
         to="/smart-store"
-        className="inline-flex items-center gap-2 px-6 py-3 bg-black text-white rounded-full text-sm hover:bg-gray-800 transition-colors"
+        className="inline-flex items-center gap-2 px-6 py-3 bg-koala-navy text-white rounded-full text-sm hover:bg-koala-navy-hover transition-colors"
       >
         {t('cart.emptyState.continueShopping')}
       </Link>

@@ -48,7 +48,7 @@ export default function AccountPaymentMethods() {
         <div className="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 mb-4">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-base font-bold">저장된 카드</h3>
-            <button className="flex items-center gap-1.5 px-3 py-2 bg-black text-white rounded-xl text-xs font-bold hover:bg-gray-800 transition-colors">
+            <button className="flex items-center gap-1.5 px-3 py-2 bg-koala-navy text-white rounded-xl text-xs font-bold hover:bg-koala-navy-hover transition-colors">
               <Plus className="w-3.5 h-3.5" /> 카드 추가
             </button>
           </div>

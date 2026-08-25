@@ -26,7 +26,7 @@ export default function ErrorPage() {
       <div className="flex flex-col gap-3 w-full max-w-xs">
         <button
           onClick={() => navigate('/')}
-          className="w-full py-4 bg-black text-white rounded-2xl font-bold text-sm active:scale-[0.98] transition-transform"
+          className="w-full py-4 bg-koala-navy text-white rounded-2xl font-bold text-sm active:scale-[0.98] transition-transform"
         >
           홈으로 돌아가기
         </button>

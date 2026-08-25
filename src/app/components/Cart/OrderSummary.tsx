@@ -42,7 +42,7 @@ export default function OrderSummary({ cartItems, subtotal, shipping, total }: O
       <Link
         to="/checkout"
         state={{ cartItems, subtotal, shipping, total }}
-        className="block w-full py-4 bg-black text-white text-center rounded-2xl hover:bg-gray-900 transition-colors font-medium text-sm"
+        className="block w-full py-4 bg-koala-navy text-white text-center rounded-2xl hover:bg-koala-navy-hover transition-colors font-medium text-sm"
       >
         {t('cart.summary.checkout')}
       </Link>

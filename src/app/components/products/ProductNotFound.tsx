@@ -9,7 +9,7 @@ export function ProductNotFound() {
       <h1 className="text-2xl mb-6 font-medium">{t('product.detail.notFound.title')}</h1>
       <Link
         to="/smart-store"
-        className="px-6 py-3 bg-black text-white rounded-full text-sm font-medium"
+        className="px-6 py-3 bg-koala-navy text-white rounded-full text-sm font-medium"
       >
         {t('product.detail.notFound.backToStore')}
       </Link>

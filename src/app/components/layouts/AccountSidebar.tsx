@@ -32,7 +32,7 @@ export default function AccountSidebar({ currentPath, user }: Props) {
   return (
     <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
       <div className="flex items-center gap-3 pb-4 mb-4 border-b border-gray-100">
-        <div className="w-10 h-10 rounded-xl bg-black flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
+        <div className="w-10 h-10 rounded-xl bg-koala-navy flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
           {initials}
         </div>
         <div className="overflow-hidden">
@@ -52,7 +52,7 @@ export default function AccountSidebar({ currentPath, user }: Props) {
               key={item.path}
               to={item.path}
               className={`flex flex-col items-center gap-1 px-3 py-2 rounded-xl transition-all whitespace-nowrap flex-shrink-0 ${
-                isActive ? 'bg-black text-white' : 'text-gray-400 hover:text-black hover:bg-gray-50'
+                isActive ? 'bg-koala-navy text-white' : 'text-gray-400 hover:text-black hover:bg-gray-50'
               }`}
             >
               <Icon className="w-4 h-4" />
